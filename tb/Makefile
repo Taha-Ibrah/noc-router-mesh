@@ -4,9 +4,9 @@ TOPLEVEL_LANG ?= verilog
 RTL_DIR := $(abspath ../rtl)
 
 VERILOG_SOURCES := $(RTL_DIR)/noc_pkg.sv \
-                   $(RTL_DIR)/xy_routing.sv
+                   $(RTL_DIR)/round_robin_arbitration.sv
 
-TOPLEVEL := xy_routing
-MODULE := xy_routing_tb
+TOPLEVEL := round_robin
+COCOTB_TEST_MODULES := round_robin_arbitration_tb
 
 include $(shell cocotb-config --makefiles)/Makefile.sim

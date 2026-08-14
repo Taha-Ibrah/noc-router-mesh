@@ -9,11 +9,10 @@
 Vtop::Vtop(VerilatedContext* _vcontextp__, const char* _vcname__)
     : VerilatedModel{*_vcontextp__}
     , vlSymsp{new Vtop__Syms(contextp(), _vcname__, this)}
-    , current_x{vlSymsp->TOP.current_x}
-    , current_y{vlSymsp->TOP.current_y}
-    , dest_x{vlSymsp->TOP.dest_x}
-    , dest_y{vlSymsp->TOP.dest_y}
-    , route_out{vlSymsp->TOP.route_out}
+    , clk{vlSymsp->TOP.clk}
+    , rst_n{vlSymsp->TOP.rst_n}
+    , request{vlSymsp->TOP.request}
+    , grant{vlSymsp->TOP.grant}
     , __PVT__noc_pkg{vlSymsp->TOP.__PVT__noc_pkg}
     , rootp{&(vlSymsp->TOP)}
 {

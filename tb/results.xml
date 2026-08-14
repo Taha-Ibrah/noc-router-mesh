@@ -1,6 +1,6 @@
 <testsuites name="results">
   <testsuite name="all" package="all">
-    <property name="random_seed" value="1786726044" />
-    <testcase name="test_xy_routing" classname="xy_routing_tb" file="/Users/taha.ibrah/Downloads/noc-router-mesh/tb/xy_routing_tb.py" lineno="27" time="0.00021386146545410156" sim_time_ns="7.0" ratio_time="32731.469342251952" />
+    <property name="random_seed" value="1786745709" />
+    <testcase name="test_round_robin_arbitration" classname="round_robin_arbitration_tb" file="/Users/taha.ibrah/Downloads/noc-router-mesh/tb/round_robin_arbitration_tb.py" lineno="28" time="0.0003516674041748047" sim_time_ns="130.0" ratio_time="369667.47118644067" />
   </testsuite>
 </testsuites>
