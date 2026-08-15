@@ -34,9 +34,8 @@ class alignas(VL_CACHE_LINE_BYTES) Vtop__Syms final : public VerilatedSyms {
 
     // SCOPE NAMES
     VerilatedScope* __Vscopep_TOP;
+    VerilatedScope* __Vscopep_crossbar_5x5;
     VerilatedScope* __Vscopep_noc_pkg;
-    VerilatedScope* __Vscopep_round_robin;
-    VerilatedScope* __Vscopep_round_robin__unnamedblk1;
 
     // SCOPE HIERARCHY
     VerilatedHierarchy __Vhier;

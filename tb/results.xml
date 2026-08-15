@@ -1,6 +1,8 @@
 <testsuites name="results">
   <testsuite name="all" package="all">
-    <property name="random_seed" value="1786745709" />
-    <testcase name="test_round_robin_arbitration" classname="round_robin_arbitration_tb" file="/Users/taha.ibrah/Downloads/noc-router-mesh/tb/round_robin_arbitration_tb.py" lineno="28" time="0.0003516674041748047" sim_time_ns="130.0" ratio_time="369667.47118644067" />
+    <property name="random_seed" value="1786812009" />
+    <testcase name="test_no_grants_drive_zero" classname="crossbar_5x5_switch_tb" file="/Users/taha.ibrah/Downloads/noc-router-mesh/tb/crossbar_5x5_switch_tb.py" lineno="45" time="0.0002238750457763672" sim_time_ns="1.0" ratio_time="4466.777422790203" />
+    <testcase name="test_every_input_output_connection" classname="crossbar_5x5_switch_tb" file="/Users/taha.ibrah/Downloads/noc-router-mesh/tb/crossbar_5x5_switch_tb.py" lineno="56" time="0.00044798851013183594" sim_time_ns="25.0" ratio_time="55805.002660989885" />
+    <testcase name="test_simultaneous_connections" classname="crossbar_5x5_switch_tb" file="/Users/taha.ibrah/Downloads/noc-router-mesh/tb/crossbar_5x5_switch_tb.py" lineno="75" time="4.410743713378906e-05" sim_time_ns="1.0" ratio_time="22671.913513513515" />
   </testsuite>
 </testsuites>
