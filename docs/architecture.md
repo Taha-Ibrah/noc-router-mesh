@@ -1,10 +1,10 @@
 noc_mesh
 └── 16 × noc_router
     ├── 5 × input_fifo
-    ├── XY route computation
+    ├── 5 x XY route computation
     ├── switch_allocator
     │   ├── 5 × round_robin_arbiter
-    │   └── output-locking state
+    │   └── output-locking state // for multi-flit wormhole packets
     └── crossbar_5x5
 
 

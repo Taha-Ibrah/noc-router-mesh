@@ -1,4 +1,4 @@
-// Shared parameters, types, and helper functions for the NoC.
+// Shared parameters and types for the NoC.
 
 package noc_pkg;
 
@@ -102,52 +102,5 @@ package noc_pkg;
 
     // One-hot grant with at most one winning input port.
     typedef logic [NUM_PORTS-1:0] grant_t;
-
-
-    // ========================================================
-    // HELPER FUNCTIONS
-    // ========================================================
-
-    // Return the matching input direction at the neighboring router.
-    function automatic port_t opposite_port(input port_t port);
-        case (port)
-
-            NORTH_PORT:
-                opposite_port = SOUTH_PORT;
-
-            SOUTH_PORT:
-                opposite_port = NORTH_PORT;
-
-            EAST_PORT:
-                opposite_port = WEST_PORT;
-
-            WEST_PORT:
-                opposite_port = EAST_PORT;
-
-            default:
-                opposite_port = LOCAL_PORT;
-
-        endcase
-
-    endfunction
-
-
-    // HEAD and SINGLE begin a packet.
-    function automatic logic is_head(input flit_t flit);
-
-        return (flit.flit_type == FLIT_HEAD) ||
-               (flit.flit_type == FLIT_SINGLE);
-
-    endfunction
-
-
-    // TAIL and SINGLE end a packet.
-    function automatic logic is_tail(input flit_t flit);
-
-        return (flit.flit_type == FLIT_TAIL) ||
-               (flit.flit_type == FLIT_SINGLE);
-
-    endfunction
-
 
 endpackage
