@@ -4,6 +4,14 @@
 
 #include "Vtop__pch.h"
 
+// Parameter definitions for Vtop___024root
+constexpr IData/*31:0*/ Vtop___024root::switch_allocator__DOT__port_west__DOT__PRIORITY_WIDTH;
+constexpr IData/*31:0*/ Vtop___024root::switch_allocator__DOT__port_south__DOT__PRIORITY_WIDTH;
+constexpr IData/*31:0*/ Vtop___024root::switch_allocator__DOT__port_east__DOT__PRIORITY_WIDTH;
+constexpr IData/*31:0*/ Vtop___024root::switch_allocator__DOT__port_north__DOT__PRIORITY_WIDTH;
+constexpr IData/*31:0*/ Vtop___024root::switch_allocator__DOT__port_local__DOT__PRIORITY_WIDTH;
+
+
 void Vtop___024root___ctor_var_reset(Vtop___024root* vlSelf);
 
 Vtop___024root::Vtop___024root(Vtop__Syms* symsp, const char* namep)

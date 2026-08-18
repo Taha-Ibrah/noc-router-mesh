@@ -34,8 +34,18 @@ class alignas(VL_CACHE_LINE_BYTES) Vtop__Syms final : public VerilatedSyms {
 
     // SCOPE NAMES
     VerilatedScope* __Vscopep_TOP;
-    VerilatedScope* __Vscopep_crossbar_5x5;
     VerilatedScope* __Vscopep_noc_pkg;
+    VerilatedScope* __Vscopep_switch_allocator;
+    VerilatedScope* __Vscopep_switch_allocator__port_east;
+    VerilatedScope* __Vscopep_switch_allocator__port_east__unnamedblk1;
+    VerilatedScope* __Vscopep_switch_allocator__port_local;
+    VerilatedScope* __Vscopep_switch_allocator__port_local__unnamedblk1;
+    VerilatedScope* __Vscopep_switch_allocator__port_north;
+    VerilatedScope* __Vscopep_switch_allocator__port_north__unnamedblk1;
+    VerilatedScope* __Vscopep_switch_allocator__port_south;
+    VerilatedScope* __Vscopep_switch_allocator__port_south__unnamedblk1;
+    VerilatedScope* __Vscopep_switch_allocator__port_west;
+    VerilatedScope* __Vscopep_switch_allocator__port_west__unnamedblk1;
 
     // SCOPE HIERARCHY
     VerilatedHierarchy __Vhier;

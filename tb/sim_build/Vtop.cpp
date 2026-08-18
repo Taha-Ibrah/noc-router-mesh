@@ -9,9 +9,11 @@
 Vtop::Vtop(VerilatedContext* _vcontextp__, const char* _vcname__)
     : VerilatedModel{*_vcontextp__}
     , vlSymsp{new Vtop__Syms(contextp(), _vcname__, this)}
-    , input_flits{vlSymsp->TOP.input_flits}
+    , clk{vlSymsp->TOP.clk}
+    , rst_n{vlSymsp->TOP.rst_n}
+    , grant_accepted{vlSymsp->TOP.grant_accepted}
+    , requests{vlSymsp->TOP.requests}
     , grants{vlSymsp->TOP.grants}
-    , output_flits{vlSymsp->TOP.output_flits}
     , __PVT__noc_pkg{vlSymsp->TOP.__PVT__noc_pkg}
     , rootp{&(vlSymsp->TOP)}
 {

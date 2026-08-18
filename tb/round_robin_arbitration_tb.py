@@ -6,11 +6,12 @@ from cocotb.triggers import FallingEdge, RisingEdge, Timer
 NUM_PORTS = 5
 
 
-async def drive_and_check(dut, requests, expected_grant):
+async def drive_and_check(dut, requests, expected_grant, grant_accepted=1):
     await FallingEdge(dut.clk)
     dut.request.value = requests
+    dut.grant_accepted.value = grant_accepted
 
-    # Check the combinational grant before the next edge updates priority.
+    # Check the grant before the next edge accepts or holds it.
     await Timer(1, unit="ns")
     actual_grant = int(dut.grant.value)
 
@@ -32,6 +33,7 @@ async def test_round_robin_arbitration(dut):
     # Reset priority to requester 0 with no active requests.
     dut.rst_n.value = 0
     dut.request.value = 0
+    dut.grant_accepted.value = 0
     await Timer(1, unit="ns")
     await RisingEdge(dut.clk)
     await RisingEdge(dut.clk)
@@ -54,3 +56,27 @@ async def test_round_robin_arbitration(dut):
     # After requester 3 wins, requester 4 is checked before requester 1.
     await drive_and_check(dut, 0b10010, 0b10000)
     await drive_and_check(dut, 0b10010, 0b00010)
+
+
+@cocotb.test()
+async def test_grant_is_held_until_accepted(dut):
+    cocotb.start_soon(Clock(dut.clk, 10, unit="ns").start())
+
+    dut.rst_n.value = 0
+    dut.request.value = 0
+    dut.grant_accepted.value = 0
+    await Timer(1, unit="ns")
+    await RisingEdge(dut.clk)
+    await RisingEdge(dut.clk)
+    await FallingEdge(dut.clk)
+    dut.rst_n.value = 1
+
+    # Requester 2 wins, but the receiver does not accept the transfer.
+    await drive_and_check(dut, 0b00100, 0b00100, grant_accepted=0)
+
+    # A new higher-priority request cannot replace the stalled winner.
+    await drive_and_check(dut, 0b00101, 0b00100, grant_accepted=0)
+
+    # Accept requester 2; priority then moves to requester 3.
+    await drive_and_check(dut, 0b00101, 0b00100, grant_accepted=1)
+    await drive_and_check(dut, 0b11111, 0b01000, grant_accepted=1)

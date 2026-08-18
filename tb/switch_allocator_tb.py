@@ -8,13 +8,16 @@ PORT_NAMES = ["LOCAL", "NORTH", "EAST", "SOUTH", "WEST"]
 EAST_PORT = 2
 
 
-async def drive_and_check(dut, request_vectors, expected_grants):
+async def drive_and_check(
+    dut, request_vectors, expected_grants, accepted_outputs=0b11111
+):
     await FallingEdge(dut.clk)
+    dut.grant_accepted.value = accepted_outputs
 
     for output_port in range(NUM_PORTS):
         dut.requests[output_port].value = request_vectors[output_port]
 
-    # Check every combinational grant before priorities update.
+    # Check every grant before the next edge accepts or holds it.
     await Timer(1, unit="ns")
 
     for output_port in range(NUM_PORTS):
@@ -39,6 +42,7 @@ async def test_switch_allocator(dut):
 
     # Reset all five arbiters with no active requests.
     dut.rst_n.value = 0
+    dut.grant_accepted.value = 0
     for output_port in range(NUM_PORTS):
         dut.requests[output_port].value = 0
 
@@ -72,3 +76,39 @@ async def test_switch_allocator(dut):
 
     expected_after_east = [0b00010, 0b00100, 0b00001, 0b10000, 0b00001]
     await drive_and_check(dut, [0b11111] * NUM_PORTS, expected_after_east)
+
+
+@cocotb.test()
+async def test_stalled_output_holds_its_grant(dut):
+    cocotb.start_soon(Clock(dut.clk, 10, unit="ns").start())
+
+    dut.rst_n.value = 0
+    dut.grant_accepted.value = 0
+    for output_port in range(NUM_PORTS):
+        dut.requests[output_port].value = 0
+
+    await Timer(1, unit="ns")
+    await RisingEdge(dut.clk)
+    await RisingEdge(dut.clk)
+    await FallingEdge(dut.clk)
+    dut.rst_n.value = 1
+
+    requests = [0] * NUM_PORTS
+    expected = [0] * NUM_PORTS
+
+    # Input 2 wins EAST, but EAST does not accept the transfer.
+    requests[EAST_PORT] = 0b00100
+    expected[EAST_PORT] = 0b00100
+    await drive_and_check(dut, requests, expected, accepted_outputs=0)
+
+    # A new input 0 request cannot replace EAST's stalled input 2 grant.
+    requests[EAST_PORT] = 0b00101
+    await drive_and_check(dut, requests, expected, accepted_outputs=0)
+
+    # Accept EAST's held grant, then verify its priority advances to input 3.
+    await drive_and_check(
+        dut, requests, expected, accepted_outputs=(1 << EAST_PORT)
+    )
+    requests[EAST_PORT] = 0b11111
+    expected[EAST_PORT] = 0b01000
+    await drive_and_check(dut, requests, expected)

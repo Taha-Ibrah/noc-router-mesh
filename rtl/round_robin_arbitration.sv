@@ -22,6 +22,8 @@ module round_robin(
     input logic clk,
     input logic rst_n,
 
+    input logic grant_accepted, // High when the granted flit completes its ready/valid transfer.
+
     // one request bit per input port
     input request_t request,
 
@@ -31,6 +33,8 @@ module round_robin(
     // Index of the requester that receives first priority.
     localparam int PRIORITY_WIDTH = $clog2(NUM_PORTS);
     logic [PRIORITY_WIDTH-1:0] priority_ptr;
+    grant_t held_grant; // Remembers the winning input while its output is stalled.
+    logic holding_grant; // High while held_grant must remain unchanged.
 
     integer offset;
     integer request_index; //which actual request bit am I checking right now?
@@ -38,23 +42,34 @@ module round_robin(
     // Scan once from the current priority and select the first request.
     always_comb begin
         grant = '0;
+        request_index = 0;
 
-        for (offset = 0; offset < NUM_PORTS; offset = offset + 1) begin
-            request_index = int'(priority_ptr) + offset;
+        // Keep the same winner while its receiving output is stalled.
+        if (holding_grant) begin
+            grant = held_grant;
+        end else begin
+            for (offset = 0; offset < NUM_PORTS; offset = offset + 1) begin
+                request_index = int'(priority_ptr) + offset;
 
-            if (request_index >= NUM_PORTS)
-                request_index = request_index - NUM_PORTS;
+                if (request_index >= NUM_PORTS)
+                    request_index = request_index - NUM_PORTS;
 
-            if ((grant == '0) && request[request_index])
-                grant[request_index] = 1'b1;
+                if ((grant == '0) && request[request_index])
+                    grant[request_index] = 1'b1;
+            end
         end
     end
 
-    // After a grant, give the following port first priority next cycle.
+    // Hold an unaccepted grant. Advance priority only after the transfer occurs.
     always_ff @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
             priority_ptr <= '0;
-        end else begin
+            held_grant <= '0;
+            holding_grant <= 1'b0;
+        end else if (grant_accepted && (grant != '0)) begin
+            held_grant <= '0;
+            holding_grant <= 1'b0;
+
             for (integer i = 0; i < NUM_PORTS; i = i + 1) begin
                 if (grant[i]) begin
                     if (i == NUM_PORTS - 1)
@@ -63,7 +78,17 @@ module round_robin(
                         priority_ptr <= PRIORITY_WIDTH'(i + 1);
                 end
             end
+        end else if (grant != '0) begin
+            held_grant <= grant;
+            holding_grant <= 1'b1;
+        end else begin
+            held_grant <= '0;
+            holding_grant <= 1'b0;
         end
     end
 
 endmodule
+
+//What are handshakes in hardware design? 
+//a protocol using dedicated control signals (like request and acknowledge)
+// to coordinate the safe transfer of data between two digital circuits or systems
