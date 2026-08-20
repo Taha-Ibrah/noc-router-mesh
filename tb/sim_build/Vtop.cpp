@@ -11,9 +11,12 @@ Vtop::Vtop(VerilatedContext* _vcontextp__, const char* _vcname__)
     , vlSymsp{new Vtop__Syms(contextp(), _vcname__, this)}
     , clk{vlSymsp->TOP.clk}
     , rst_n{vlSymsp->TOP.rst_n}
-    , grant_accepted{vlSymsp->TOP.grant_accepted}
-    , requests{vlSymsp->TOP.requests}
-    , grants{vlSymsp->TOP.grants}
+    , local_input_flits{vlSymsp->TOP.local_input_flits}
+    , local_input_valid{vlSymsp->TOP.local_input_valid}
+    , local_input_ready{vlSymsp->TOP.local_input_ready}
+    , local_output_flits{vlSymsp->TOP.local_output_flits}
+    , local_output_valid{vlSymsp->TOP.local_output_valid}
+    , local_output_ready{vlSymsp->TOP.local_output_ready}
     , __PVT__noc_pkg{vlSymsp->TOP.__PVT__noc_pkg}
     , rootp{&(vlSymsp->TOP)}
 {

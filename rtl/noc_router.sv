@@ -15,57 +15,42 @@
 import noc_pkg::*;
 
 module noc_router #(
-    // This router's address in the mesh.
-    // For example, ROUTER_X=2 and ROUTER_Y=1 means router (2,1).
+    // Router coordinates in the mesh.
     parameter logic [X_WIDTH-1:0] ROUTER_X = '0,
     parameter logic [Y_WIDTH-1:0] ROUTER_Y = '0
 ) (
-    // clk is the timing signal. Stored values update on its rising edge.
-    // rst_n clears stored values when it is 0; normal operation uses 1.
+    // Clock and active-low reset.
     input logic clk,
     input logic rst_n,
 
-    // One incoming flit value for each of the five input ports.
-    // input_flits[port] is meaningful only while input_valid[port] is high.
-    // A flit is stored on a rising clock edge when valid and ready are both 1.
-    // Port indexes are 0=LOCAL, 1=NORTH, 2=EAST, 3=SOUTH, and 4=WEST.
+    // Input ready/valid channels; port order is LOCAL, NORTH, EAST, SOUTH, WEST.
     input flit_t input_flits [NUM_PORTS],
 
-    // One valid bit from each sender. A high bit says the matching input_flit
-    // contains real data. The sender must keep that flit stable until this
-    // router raises the matching input_ready bit and accepts it.
+    // Senders hold valid flits stable until accepted.
+    // Driven by the sender: 1 means the matching input_flit contains real data.
     input logic [NUM_PORTS-1:0] input_valid,
 
-    // One ready bit returned to each sender. A bit is high when the matching
-    // input FIFO has room. Valid and ready being high together completes the
-    // input transfer and stores the flit in that FIFO.
+    // High when the corresponding input FIFO has room.
+    // Driven by this router: 1 means that input port can accept a flit.
     output logic [NUM_PORTS-1:0] input_ready,
 
-    // One outgoing flit value for each output port. The crossbar selects these
-    // values from the five FIFO fronts according to allocator_grants. A value
-    // is meaningful only when its matching output_valid bit is high.
+    // Crossbar-selected output flits.
     output flit_t output_flits [NUM_PORTS],
 
-    // One valid bit for each outgoing flit. A high bit means an input won that
-    // output and the crossbar is presenting its flit. During a stall, valid
-    // and the selected flit remain unchanged until the receiver accepts them.
+    // Valid outputs remain stable while stalled.
+    // Driven by this router: 1 means the matching output_flit contains real data.
     output logic [NUM_PORTS-1:0] output_valid,
 
-    // One ready bit supplied by each receiving neighbor or local endpoint.
-    // A high bit allows the matching valid output flit to transfer. A low bit
-    // stalls that output, keeps its grant, and prevents the source FIFO pop.
+    // Readiness from neighboring routers or the local endpoint.
+    // Driven by the receiver: 1 means that output port's flit can be accepted.
     input logic [NUM_PORTS-1:0] output_ready
 );
 
-
-    //BIT VECTOR: WHEN BRACKETS COME BEFORE THE VARIABLE NAME
-    //UNPACKED ARRAY: BRACKETS AFTER THE VARIABLE NAME DEFINE AN ARRAY
-
-
+    // Per-port FIFO state and routing decisions.
     logic [NUM_PORTS-1:0] full;
     logic [NUM_PORTS-1:0] empty;
     flit_t fifo_flits [NUM_PORTS];
-    port_t requested_output [NUM_PORTS]; //STORES THE CHOSEN DIRECTION BY XY_ROUTING FOR EACH FIFO'S FRONT FLIT
+    port_t requested_output [NUM_PORTS];
 
     assign input_ready[LOCAL_PORT] = !full[LOCAL_PORT];
     assign input_ready[NORTH_PORT] = !full[NORTH_PORT];
@@ -73,67 +58,36 @@ module noc_router #(
     assign input_ready[SOUTH_PORT] = !full[SOUTH_PORT];
     assign input_ready[WEST_PORT]  = !full[WEST_PORT];
 
+    // Switch-allocation control signals.
+    request_t allocator_requests [NUM_PORTS];
+    grant_t allocator_grants [NUM_PORTS];
+    logic [NUM_PORTS-1:0] fifo_read_request;
 
-    //REQUIRED INTERNAL MODULES FOR SWITCH ALLOCATOR:
-    request_t allocator_requests [NUM_PORTS]; //array of bits
-    grant_t allocator_grants [NUM_PORTS]; //array of bits - only one bit is high
-    logic [NUM_PORTS-1:0] fifo_read_request; //bit vector
-
-    // PURPOSE: Convert the five individual XY-routing decisions into the 5x5
-    // request matrix expected by the switch allocator. The matrix is arranged
-    // as allocator_requests[output][input]. Rebuilding the entire matrix here
-    // keeps this block purely combinational and prevents old requests from
-    // remaining after a FIFO becomes empty or changes its desired output.
+    // Build the request matrix as allocator_requests[output][input].
     always_comb begin
-        // Clear all five output request vectors before creating new requests.
         for (integer output_port = 0; output_port < NUM_PORTS; output_port = output_port + 1)
             allocator_requests[output_port] = '0;
 
-        // Each non-empty input FIFO requests the output chosen by its XY router.
         for (integer input_port = 0; input_port < NUM_PORTS; input_port = input_port + 1) begin
             if (!empty[input_port])
-                // First index is the requested output; second index is the requesting input.
                 allocator_requests[requested_output[input_port]][input_port] = 1'b1;
-                //Example: if the NORTH input wants the EAST output:
-                //allocator_requests[EAST_PORT][NORTH_PORT] = 1'b1;
         end
     end
 
-
-    // PURPOSE: Decide which input FIFO may remove its front flit this cycle.
-    // A routing decision alone is not enough: that input must win its requested
-    // output, and the receiver attached to that output must also be ready. This
-    // makes a FIFO read occur only for a completed output handshake, preventing
-    // a stalled or losing flit from being discarded.
+    // Pop a FIFO only when its grant completes an output handshake.
     always_comb begin
-        // Check whether each input won access to the one output it requested.
         for (integer input_port = 0; input_port < NUM_PORTS; input_port = input_port + 1) begin
             if (!empty[input_port]) begin
-                // Pop the FIFO only when it was granted and the receiver is ready.
                 fifo_read_request[input_port] =
                     allocator_grants[requested_output[input_port]][input_port] &&
                     output_ready[requested_output[input_port]];
             end else begin
-                // An empty FIFO has nothing to remove.
                 fifo_read_request[input_port] = 1'b0;
             end
         end
     end
 
-    // PURPOSE: Tell each receiver whether its matching output_flit contains a
-    // real flit selected by the allocator and crossbar. The same grant vector
-    // controls both the selected data and its valid bit, keeping them matched.
-    //
-    // allocator_grants[output_port] is a five-bit one-hot vector. Each bit
-    // represents one input FIFO that could be connected to that output. When
-    // every grant bit is 0, no input won the output and its flit is not valid.
-    // When one grant bit is 1, the crossbar places that winning input's flit
-    // on the output, so the matching output_valid bit must also become 1.
-    //
-    // The reduction-OR operator (|) combines the five grant bits into one
-    // valid bit. output_valid is intentionally independent of output_ready:
-    // valid says that data is available, while ready comes from the receiver
-    // and says whether that data can be accepted during the current cycle.
+    // An output is valid whenever its one-hot grant vector is nonzero.
     always_comb begin
         for (integer output_port = 0; output_port < NUM_PORTS; output_port = output_port + 1) begin
             output_valid[output_port] = |allocator_grants[output_port];

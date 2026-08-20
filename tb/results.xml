@@ -1,7 +1,9 @@
 <testsuites name="results">
   <testsuite name="all" package="all">
-    <property name="random_seed" value="1786834227" />
-    <testcase name="test_switch_allocator" classname="switch_allocator_tb" file="/Users/taha.ibrah/Downloads/noc-router-mesh/tb/switch_allocator_tb.py" lineno="39" time="0.00048613548278808594" sim_time_ns="120.0" ratio_time="246844.76704266798" />
-    <testcase name="test_stalled_output_holds_its_grant" classname="switch_allocator_tb" file="/Users/taha.ibrah/Downloads/noc-router-mesh/tb/switch_allocator_tb.py" lineno="81" time="0.0003349781036376953" sim_time_ns="70.0" ratio_time="208968.88256227758" />
+    <property name="random_seed" value="1787193432" />
+    <testcase name="test_reset_and_local_delivery" classname="noc_mesh_tb" file="/Users/taha.ibrah/Downloads/noc-router-mesh/tb/noc_mesh_tb.py" lineno="50" time="0.0012180805206298828" sim_time_ns="56.0" ratio_time="45973.97220591114" />
+    <testcase name="test_corner_to_corner_xy_routing" classname="noc_mesh_tb" file="/Users/taha.ibrah/Downloads/noc-router-mesh/tb/noc_mesh_tb.py" lineno="87" time="0.0005142688751220703" sim_time_ns="116.0" ratio_time="225562.9411219286" />
+    <testcase name="test_two_flits_cross_the_mesh_in_parallel" classname="noc_mesh_tb" file="/Users/taha.ibrah/Downloads/noc-router-mesh/tb/noc_mesh_tb.py" lineno="134" time="0.0004899501800537109" sim_time_ns="116.0" ratio_time="236758.76593673966" />
+    <testcase name="test_destination_backpressure_holds_flit" classname="noc_mesh_tb" file="/Users/taha.ibrah/Downloads/noc-router-mesh/tb/noc_mesh_tb.py" lineno="188" time="0.0004508495330810547" sim_time_ns="116.0" ratio_time="257292.04865150715" />
   </testsuite>
 </testsuites>
