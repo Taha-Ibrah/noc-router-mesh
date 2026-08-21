@@ -1,0 +1,10 @@
+<testsuites name="results">
+  <testsuite name="all" package="all">
+    <property name="random_seed" value="1787282698" />
+    <testcase name="test_reset_and_local_delivery" classname="noc_mesh_tb" file="/Users/taha.ibrah/Downloads/noc-router-mesh/rtl_gds/flattened_tb/noc_mesh_tb.py" lineno="83" time="0.0006589889526367188" sim_time_ns="56.0" ratio_time="84978.66280752532" />
+    <testcase name="test_corner_to_corner_xy_routing" classname="noc_mesh_tb" file="/Users/taha.ibrah/Downloads/noc-router-mesh/rtl_gds/flattened_tb/noc_mesh_tb.py" lineno="120" time="0.00045180320739746094" sim_time_ns="116.0" ratio_time="256748.95197889183" />
+    <testcase name="test_two_flits_cross_the_mesh_in_parallel" classname="noc_mesh_tb" file="/Users/taha.ibrah/Downloads/noc-router-mesh/rtl_gds/flattened_tb/noc_mesh_tb.py" lineno="167" time="0.00043010711669921875" sim_time_ns="116.0" ratio_time="269700.2572062084" />
+    <testcase name="test_destination_backpressure_holds_flit" classname="noc_mesh_tb" file="/Users/taha.ibrah/Downloads/noc-router-mesh/rtl_gds/flattened_tb/noc_mesh_tb.py" lineno="219" time="0.0004200935363769531" sim_time_ns="116.0" ratio_time="276128.98070374574" />
+    <testcase name="test_analysis_traffic_and_performance_numbers" classname="noc_mesh_tb" file="/Users/taha.ibrah/Downloads/noc-router-mesh/rtl_gds/flattened_tb/noc_mesh_tb.py" lineno="266" time="0.0023729801177978516" sim_time_ns="280.0" ratio_time="117995.0889179142" />
+  </testsuite>
+</testsuites>

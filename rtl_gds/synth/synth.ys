@@ -1,0 +1,22 @@
+# Read the flattened, Yosys-compatible RTL.
+read_verilog -sv ../flattened_rtl/noc_pkg.sv
+read_verilog -sv ../flattened_rtl/fifo_buffer.sv
+read_verilog -sv ../flattened_rtl/xy_routing.sv
+read_verilog -sv ../flattened_rtl/round_robin_arbitration.sv
+read_verilog -sv ../flattened_rtl/switch_allocator.sv
+read_verilog -sv ../flattened_rtl/crossbar_5x5_switch.sv
+read_verilog -sv ../flattened_rtl/noc_router.sv
+read_verilog -sv ../flattened_rtl/noc_mesh.sv
+
+# Set the complete mesh as the top-level design.
+hierarchy -check -top noc_mesh
+
+# Run generic synthesis.
+synth -top noc_mesh
+
+# Check the synthesized design and print its statistics.
+check
+stat
+
+# Save generated output outside the source directories.
+write_verilog -noattr ../build/noc_mesh_synth.v
