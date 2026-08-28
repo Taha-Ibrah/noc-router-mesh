@@ -1,0 +1,50 @@
+# TLDR; This ".ys" file maps the rtl to the sky130 cells (synthesis with yosys)
+
+# This is the SKY130 HD typical process corner at 25 C and 1.80 V.
+# Native Yosys scripts do not support Tcl-style `set` variables, so the
+# Liberty path is written explicitly in each command that needs it.
+
+# Read the flattened, Yosys-compatible RTL.
+# Paths are relative to rtl_gds because Yosys will be launched there.
+read_verilog -sv flattened_rtl/noc_pkg.sv
+read_verilog -sv flattened_rtl/fifo_buffer.sv
+read_verilog -sv flattened_rtl/xy_routing.sv
+read_verilog -sv flattened_rtl/round_robin_arbitration.sv
+read_verilog -sv flattened_rtl/switch_allocator.sv
+read_verilog -sv flattened_rtl/crossbar_5x5_switch.sv
+read_verilog -sv flattened_rtl/noc_router.sv
+read_verilog -sv flattened_rtl/noc_mesh.sv
+
+# Elaborate the complete mesh.
+hierarchy -check -top noc_mesh
+
+# Generic synthesis and hierarchy flattening.
+synth -top noc_mesh -flatten
+
+# Save the generic result for comparison.
+write_verilog -noattr build/noc_mesh_generic.v
+
+# Map Yosys flip-flops to SKY130 flip-flops.
+# Avoid scan-chain cells for now.
+dfflibmap \
+    -dont_use sky130_fd_sc_hd__s* \
+    -liberty /Users/taha.ibrah/.ciel/sky130A/libs.ref/sky130_fd_sc_hd/lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+
+# Map combinational logic to SKY130 standard cells.
+# Exclude cells reserved for physical-design tasks.
+abc -liberty /Users/taha.ibrah/.ciel/sky130A/libs.ref/sky130_fd_sc_hd/lib/sky130_fd_sc_hd__tt_025C_1v80.lib -dont_use sky130_fd_sc_hd__clk* -dont_use sky130_fd_sc_hd__dly* -dont_use sky130_fd_sc_hd__tap* -dont_use sky130_fd_sc_hd__decap* -dont_use sky130_fd_sc_hd__fill* -dont_use sky130_fd_sc_hd__diode* -dont_use sky130_fd_sc_hd__lpflow_* -dont_use sky130_fd_sc_hd__probe* -dont_use sky130_fd_sc_hd__s*
+
+# Remove unused logic.
+clean -purge
+
+# Import cell declarations so check understands SKY130 pin directions.
+read_liberty -lib -ignore_miss_func /Users/taha.ibrah/.ciel/sky130A/libs.ref/sky130_fd_sc_hd/lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+
+# Fail synthesis if structural problems remain.
+check -assert
+
+# Print mapped cell counts and estimated cell area.
+stat -liberty /Users/taha.ibrah/.ciel/sky130A/libs.ref/sky130_fd_sc_hd/lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+
+# Produce a structural standard-cell netlist.
+write_verilog -noattr -noexpr build/noc_mesh_mapped.v

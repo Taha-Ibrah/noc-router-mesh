@@ -52,6 +52,8 @@ module noc_router #(
     flit_t fifo_flits [NUM_PORTS];
     port_t requested_output [NUM_PORTS];
 
+    //if the input is not full, then input port of router is ready to accept flits.
+    //***Example of backpressure***
     assign input_ready[LOCAL_PORT] = !full[LOCAL_PORT];
     assign input_ready[NORTH_PORT] = !full[NORTH_PORT];
     assign input_ready[EAST_PORT]  = !full[EAST_PORT];
