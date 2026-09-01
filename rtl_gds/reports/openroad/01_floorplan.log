@@ -1,0 +1,25 @@
+OpenROAD bazel-nostamp 
+Features included (+) or not (-): -GPU +GUI -Python
+This program is licensed under the BSD-3 license. See the LICENSE file for details.
+Components of this program may be licensed under more restrictive licenses which must be honored.
+Reading the SKY130 technology and standard-cell physical abstracts...
+[INFO ODB-0227] LEF file: /Users/taha.ibrah/.ciel/sky130A/libs.ref/sky130_fd_sc_hd/techlef/sky130_fd_sc_hd__nom.tlef, created 14 layers, 25 vias
+[WARNING ODB-0220] WARNING (LEFPARS-2008): NOWIREEXTENSIONATPIN statement is obsolete in version 5.6 or later.
+The NOWIREEXTENSIONATPIN statement will be ignored. See file /Users/taha.ibrah/.ciel/sky130A/libs.ref/sky130_fd_sc_hd/lef/sky130_fd_sc_hd.lef at line 2.
+
+[INFO ODB-0227] LEF file: /Users/taha.ibrah/.ciel/sky130A/libs.ref/sky130_fd_sc_hd/lef/sky130_fd_sc_hd.lef, created 437 library cells
+Reading SKY130 cell timing and the mapped gate-level netlist...
+Applying the 100 MHz timing constraints...
+Initializing the floorplan at 35% core utilization...
+[INFO IFP-0107] Defining die area using utilization: 35.00% and aspect ratio: 1.
+[WARNING IFP-0028] Core area lower left (20.000, 20.000) snapped to (20.240, 21.760).
+[INFO IFP-0001] Added 534 rows of 3164 site unithd.
+[INFO IFP-0100] Die BBox:  (  0.000  0.000 ) ( 1496.060 1496.060 ) um
+[INFO IFP-0101] Core BBox: ( 20.240 21.760 ) ( 1475.680 1474.240 ) um
+[INFO IFP-0102] Core area:                      2113997.491 um^2
+[INFO IFP-0103] Total instances area:            742041.677 um^2
+[INFO IFP-0104] Effective utilization:                0.351
+[INFO IFP-0105] Number of instances:                  53947
+Design area 742042 um^2 35% utilization.
+Floorplan database written to: /Users/taha.ibrah/Downloads/noc-router-mesh/rtl_gds/build/openroad/noc_mesh_floorplan.odb
+Floorplan DEF written to:      /Users/taha.ibrah/Downloads/noc-router-mesh/rtl_gds/build/openroad/noc_mesh_floorplan.def
