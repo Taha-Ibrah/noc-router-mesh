@@ -4,15 +4,14 @@ noc_mesh
     ├── 5 x XY route computation
     ├── switch_allocator
     │   ├── 5 × round_robin_arbiter
-    │   └── output-locking state // for multi-flit wormhole packets
     └── crossbar_5x5
 
 
 
 Network Topology: 4x4 2D Mesh
-Network Type: Packet-switched (performs routing per packet in each router. Routing each packet individually.)
+Network Type: Flit-by-Flit switching --> This means that each 64-bit flit is independently addressed, routed and arbitrated. Routers do not track larger packet boundaries (From head to tail)
 Routing Algorithm: Deterministic XY Routing (Fixed path regardless of network traffic)
-Switching technique: Wormhole switching (Packets broken into smaller flits. Pipelined switching is lower latency    )
+Switching technique: Single-flit packet switching. Each output is allocated for one successful flit transfer. No Head-to-Tail reservation.
 
 
 **CORE ROUTER MODULES:**
@@ -35,10 +34,10 @@ Switch allocator: Traffic manager. If there is contention after computation deci
 
 
 
-**fifo_buffer.sv** - Buffers incoming flits (flow control units); instantiate one per input port
+**fifo_buffer.sv** - Buffers incoming flits (flow control units); instantiate one per input port.
 
 **xy_routing** - Chooses N, E, S, W or Local based on destination coordinates
-How the routing algorithm works: Fix the X-coord, Y-coord, then deliver locally when both coordinates match
+How the routing algorithm works: Fix the X-coord, Y-coord, then deliver locally when both coordinates match.
 
 **switch_allocator.sv** - Collects route reqeuests and instantiates/uses one arbiter per output
 
@@ -46,13 +45,10 @@ How the routing algorithm works: Fix the X-coord, Y-coord, then deliver locally 
 
 **crossbar_5x5_switch.sv** - Connects selected input flits to the five output ports
 
-**vc_allocator.sv** - OPTIONAL FOR SCALABILITY: baseline design uses one FIFO per input, not multiple virtual channels. VC allocator is needed only when each physical input has multiple virtual-channel FIFOs.
-
 
 **MESH-LEVEL MODULES:**
 
 **noc_mesh.sv** - Instantiates and connects all routers in the 2D mesh (4x4)
-
 
 
 **noc_pkg.sv** - Contains shared definitions used by every module.
