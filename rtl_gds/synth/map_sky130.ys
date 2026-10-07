@@ -1,0 +1,34 @@
+# Read Yosys-compatible RTL.
+read_verilog -sv flattened_rtl/noc_pkg.sv
+read_verilog -sv flattened_rtl/fifo_buffer.sv
+read_verilog -sv flattened_rtl/xy_routing.sv
+read_verilog -sv flattened_rtl/round_robin_arbitration.sv
+read_verilog -sv flattened_rtl/switch_allocator.sv
+read_verilog -sv flattened_rtl/crossbar_5x5_switch.sv
+read_verilog -sv flattened_rtl/noc_router.sv
+read_verilog -sv flattened_rtl/noc_mesh.sv
+
+# Synthesize and merge module hierarchy.
+hierarchy -check -top noc_mesh
+synth -top noc_mesh -flatten
+
+# Save generic logic before technology mapping.
+write_verilog -noattr build/noc_mesh_generic.v
+
+# Map flip-flops to SKY130 cells; exclude scan cells.
+dfflibmap -dont_use sky130_fd_sc_hd__s* -liberty /Users/taha.ibrah/.ciel/sky130A/libs.ref/sky130_fd_sc_hd/lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+
+# Map combinational logic; exclude specialized cells.
+abc -liberty /Users/taha.ibrah/.ciel/sky130A/libs.ref/sky130_fd_sc_hd/lib/sky130_fd_sc_hd__tt_025C_1v80.lib -dont_use sky130_fd_sc_hd__clk* -dont_use sky130_fd_sc_hd__dly* -dont_use sky130_fd_sc_hd__tap* -dont_use sky130_fd_sc_hd__decap* -dont_use sky130_fd_sc_hd__fill* -dont_use sky130_fd_sc_hd__diode* -dont_use sky130_fd_sc_hd__lpflow_* -dont_use sky130_fd_sc_hd__probe* -dont_use sky130_fd_sc_hd__s*
+
+clean -purge
+
+# Load cell declarations for structural checking.
+read_liberty -lib -ignore_miss_func /Users/taha.ibrah/.ciel/sky130A/libs.ref/sky130_fd_sc_hd/lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+check -assert
+
+# Report mapped cell counts and estimated cell area.
+stat -liberty /Users/taha.ibrah/.ciel/sky130A/libs.ref/sky130_fd_sc_hd/lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+
+# Save the SKY130 standard-cell netlist.
+write_verilog -noattr -noexpr build/noc_mesh_mapped.v

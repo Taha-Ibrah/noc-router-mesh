@@ -37,3 +37,8 @@ Process Design Kit (PDK) - Complete collection of files provided by semiconducto
 - Checks for setup and hold violations.
     - Setup Violation: data arrives too late for clk edge
     - Hold Violation: data changes too quickly
+- Important Outputs:
+    - __Worst Negative Slack (WNS):__ Single worst timing violation in the entire chip. (-)ve slack means that chip will not work reliably at target clock speeds (data arrived late).
+    - __Total Negative Slack (TNS):__ Sum of all negative slacks. Tells how widespread timing problems are in the entire chip.
+
+**4: Floorplanning (OpenROAD)**
