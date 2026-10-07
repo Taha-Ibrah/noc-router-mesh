@@ -1,4 +1,6 @@
-Vtop__pch.h.slow.gch: Vtop__pch.h \
+Vtop__pch.h.slow.gch: \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/SDKSettings.json \
+  Vtop__pch.h \
   /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated.h \
   /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated_config.h \
   /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilatedos.h \

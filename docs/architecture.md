@@ -14,6 +14,18 @@ Routing Algorithm: Deterministic XY Routing (Fixed path regardless of network tr
 Switching technique: Single-flit packet switching. Each output is allocated for one successful flit transfer. No Head-to-Tail reservation.
 
 
+
+
+**Details of singular flit:**
+- Total Width: 64-bits
+      - [63:62] flit_type (Packet position -> Head, Tail, Body, or Single)
+      - [61:60] dest_x (Destination of X-coordinate)
+      - [59:58] dest_y (Destination of Y-coordinate)
+      - [57:50] Packet_id (Tracking)
+      - [49:0] Payload (Flit data)
+
+
+
 **CORE ROUTER MODULES:**
 
 **noc_router.sv** - Top-level router connecting all internal modules

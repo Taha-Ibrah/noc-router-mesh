@@ -1,4 +1,5 @@
 verilator.o: \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/SDKSettings.json \
   /Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/site-packages/cocotb/share/lib/verilator/verilator.cpp \
   Vtop.h \
   /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated.h \

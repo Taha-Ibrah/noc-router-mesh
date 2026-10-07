@@ -1,4 +1,5 @@
 Vtop__Syms__ctor__2__Slow.o: \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/SDKSettings.json \
   /Users/taha.ibrah/Downloads/noc-router-mesh/rtl_gds/flattened_tb/sim_build/Vtop__pch.h \
   /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated.h \
   /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated_config.h \
