@@ -1,5 +1,7 @@
 Architecture during ASIC (RTL-GDSII) Flow.
 
+**Statistics can be viewed in .log files.**
+
 Common Terminology:
 
 _Process Design Kit (PDK)_ - Complete collection of files provided by semiconductor foundry.

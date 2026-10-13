@@ -34,6 +34,6 @@ set_input_transition $INPUT_TRANSITION_NS $DATA_INPUTS
 set_load $OUTPUT_LOAD_PF $DATA_OUTPUTS
 
 # Hold active-low reset inactive during functional timing analysis.
-set_case_analysis 1 [get_ports rst_n]lin
+set_case_analysis 1 [get_ports rst_n]
 
 # Actual slack and pass/fail results are computed by noc_mesh_sta.tcl.
