@@ -102,3 +102,35 @@ Paths are relative to `rtl_gds/`.
 | `build/openroad/noc_mesh_taps.def` | Generated tap/endcap DEF |
 | `build/openroad/noc_mesh_taps.odb` | Generated OpenROAD checkpoint |
 | `reports/tapcell.log` | Run log |
+
+## PDN Generation
+
+| Metric | Value |
+|---|---:|
+| Status | Completed |
+| Grid generation runtime | 0.47 s |
+| Voltage domain | CORE |
+| Power grid | core_grid |
+| Power / ground nets | VDD / VSS |
+| VDD connectivity (floorplanning check) | PASS |
+| VSS connectivity (floorplanning check) | PASS |
+| Special nets | 2 |
+| Total instances | 83,155 |
+| Top-level pin bits, including power/ground | 2,116 |
+| met1 rail width | 0.48 µm |
+| met4 strap width / pair pitch | 1.60 / 27.14 µm |
+| met5 strap width / pair pitch | 1.60 / 27.20 µm |
+| Power terminal layer | met5 |
+| IR-drop analysis | Not run |
+
+### Files
+
+Paths are relative to `rtl_gds/`.
+
+| File | Role |
+|---|---|
+| `openroad/04_pdn.tcl` | Stage script (input) |
+| `build/openroad/noc_mesh_pdn.def` | Generated DEF with power grid |
+| `build/openroad/noc_mesh_pdn.odb` | Generated OpenROAD checkpoint |
+| `reports/pdn.log` | Run log |
+| `reports/pdn_failed_vias.rpt` | Optional failed-via report; not generated in this run |
