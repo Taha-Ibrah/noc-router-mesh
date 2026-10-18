@@ -102,6 +102,7 @@ _Why is Capacitance so important in ASIC?_ - Capacitance matters because every s
     - OpenROAD checks:
         - _Setup:_ data must arrive before the receiving register's clock edge.
         - _Hold:_ data must remain stable long enough after that edge
+        - Post_CTS also checks for any remaining electrical violations.
 
 **13: Global Routing:** OpenROAD divides the layout into regions and estimates how many wires each region can accommodate on each metal layer. It then chooses routes that connect the cells while avoiding crowded areas.
     - The main objective it to plan the path that wires will take between cell pins.

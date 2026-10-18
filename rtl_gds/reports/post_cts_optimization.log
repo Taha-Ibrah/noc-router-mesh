@@ -1,0 +1,89 @@
+OpenROAD bazel-nostamp 
+Features included (+) or not (-): -GPU +GUI -Python
+This program is licensed under the BSD-3 license. See the LICENSE file for details.
+Components of this program may be licensed under more restrictive licenses which must be honored.
+
+BEFORE REPAIR
+worst slack max 7.973
+worst slack min -1.661
+tns min -8002.737
+Iteration |   Area    | Resized | Buffers | Nets repaired | Remaining
+---------------------------------------------------------------------
+        0 |     +0.0% |       0 |       0 |             0 |     62492
+    final |     +0.0% |       1 |       0 |             1 |         0
+---------------------------------------------------------------------
+[INFO RSZ-0034] Found 1 slew violations.
+[INFO RSZ-0039] Resized 1 instances.
+[INFO RSZ-0504] Runtime: 1.75s
+[INFO RSZ-0100] Repair move sequence: UnbufferMove SizeUpMove SwapPinsMove BufferMove CloneMove SplitLoadMove 
+[INFO RSZ-0098] No setup violations found
+[INFO RSZ-0505] Runtime: 0.33s
+[INFO RSZ-0046] Found 8106 endpoints with hold violations.
+Iteration | Resized | Buffers | Cloned Gates |   Area   |   WNS   |   TNS   | Endpoint
+--------------------------------------------------------------------------------------
+        0 |       0 |       0 |            0 |    +0.0% |  -1.661 | -8002.737 | _83553_/D
+    final |      49 |    2997 |            0 |    +3.4% |   0.051 |   0.000 | _74033_/D
+--------------------------------------------------------------------------------------
+[INFO RSZ-0132] Resized 49 instances.
+[INFO RSZ-0032] Inserted 2997 hold buffers.
+[INFO RSZ-0506] Runtime: 5.27s
+[INFO DPL-0006] Core area: 2113997.49 um^2
+[INFO DPL-0007] Movable instances area: 880976.18 um^2
+[INFO DPL-0008] Fixed instances area within core: 39217.61 um^2
+[INFO DPL-0009] Utilization: 43.5%
+[INFO DPL-0005] Diamond search max displacement: +/- 500 sites horizontally, +/- 100 rows vertically.
+[INFO DPL-1102] Legalizing using negotiation legalizer.
+[INFO DPL-1103] Negotiation base search window: +/-20 sites horizontally, +/-5 rows vertically 
+	Automatic search window extension enabled.
+	Search window extendable up to the max displacement cap of +/-500 sites, +/-100 rows near walls.
+[INFO DPL-1104] NegotiationLegalizer DRC penalty: 5.
+[INFO DPL-0392] Negotiation cell height distribution (1 unique row-count(s)):
+[INFO DPL-0393]   height 1 row(s): 93639 cells
+          |      Total |  Illegal |  Illegal
+Iteration | Violations |    Cells |    Sites
+---------------------------------------------
+        0 |       8142 |      1134 |      6568
+        1 |       6658 |       738 |      5394
+        2 |       4644 |       508 |      3914
+        3 |       3225 |       334 |      2864
+        4 |       2047 |       214 |      1814
+        5 |       1408 |       141 |      1255
+        6 |        971 |        90 |       878
+        7 |        643 |        70 |       573
+        8 |        637 |        54 |       583
+        9 |        443 |        39 |       404
+       10 |        277 |        27 |       250
+       20 |         44 |         2 |        42
+       22 |          0 |         0 |         0
+Negotiation phase 1 converged at iteration 22.
+[INFO DPL-0500] Runtime: 1.43s
+Placement Analysis
+---------------------------------
+total displacement      30544.8 u
+average displacement        0.3 u
+max displacement           68.0 u
+original HPWL         4230515.7 u
+legalized HPWL        4248001.3 u
+delta HPWL                    0 %
+
+[INFO PSM-0040] All shapes on net VDD are connected.
+[INFO PSM-0040] All shapes on net VSS are connected.
+
+AFTER REPAIR
+Design area 916185 um^2 43% utilization.
+
+Setup timing:
+worst slack max 7.973
+wns max 0.000
+tns max 0.000
+
+Hold timing:
+worst slack min 0.042
+wns min 0.000
+tns min 0.000
+
+Electrical checks:
+Slew violations: 0
+Capacitance violations: 0
+
+Post-CTS optimization checkpoint saved.
