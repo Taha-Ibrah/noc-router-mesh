@@ -134,3 +134,81 @@ Paths are relative to `rtl_gds/`.
 | `build/openroad/noc_mesh_pdn.odb` | Generated OpenROAD checkpoint |
 | `reports/pdn.log` | Run log |
 | `reports/pdn_failed_vias.rpt` | Optional failed-via report; not generated in this run |
+
+## Global Placement
+
+| Metric | Value |
+|---|---:|
+| Status | Completed |
+| Timing model | Placement-estimated parasitics; ideal clock |
+| Clock period / target frequency | 20.000 ns / 50.00 MHz |
+| Setup status | PASS |
+| Worst setup slack | +8.850 ns |
+| Setup TNS | 0.000 ns |
+| Hold status | PASS |
+| Worst hold slack | +0.064 ns |
+| Hold TNS | 0.000 ns |
+| Design area | 824,140 µm² |
+| Reported utilization | 39% |
+| Total instances | 87,191 |
+| Placed movable instances | 57,983 |
+| Fixed instances | 29,208 |
+| Initial placement density target | 0.50 |
+| Global placement iterations | 1,534 |
+| Final estimated HPWL | 3,968,923.96 µm |
+| Final weighted congestion | 1.0584 |
+| Routability congestion target | Not reached |
+| Final slew/capacitance violation counts | Not reported |
+
+### Files
+
+Paths are relative to `rtl_gds/`.
+
+| File | Role |
+|---|---|
+| `openroad/05_global_placement.tcl` | Stage script (input) |
+| `build/openroad/noc_mesh_global_place.def` | Generated global-placement DEF |
+| `build/openroad/noc_mesh_global_place.odb` | Generated OpenROAD checkpoint |
+| `build/openroad/noc_mesh_global_place.v` | Generated netlist after placement optimization |
+| `reports/global_placement.log` | Run log |
+
+## Placement Optimization
+
+| Metric | Value |
+|---|---:|
+| Status | Completed |
+| Timing model | Placement-estimated parasitics; ideal clock |
+| Repair runtime | 1.78 s |
+| Buffers inserted | 4 |
+| Nets repaired | 4 |
+| Existing cells resized | 0 |
+| Initial slew violations | 1 |
+| Initial capacitance violations (precheck) | 3 |
+| Final slew violations | 0 |
+| Final capacitance violations | 0 |
+| Final fanout violations | 0 |
+| Electrical status | PASS |
+| Clock period / target frequency | 20.000 ns / 50.00 MHz |
+| Setup status | PASS |
+| Worst setup slack | +8.850 ns |
+| Setup TNS | 0.000 ns |
+| Hold status | PASS |
+| Worst hold slack | +0.064 ns |
+| Hold TNS | 0.000 ns |
+| Design area | 824,212 µm² |
+| Reported utilization | 39% |
+| Total instances | 87,195 |
+| Placed movable instances | 57,987 |
+| Fixed instances | 29,208 |
+
+### Files
+
+Paths are relative to `rtl_gds/`.
+
+| File | Role |
+|---|---|
+| `openroad/06_placement_optimization.tcl` | Stage script (input) |
+| `build/openroad/noc_mesh_place_opt.def` | Generated optimized-placement DEF |
+| `build/openroad/noc_mesh_place_opt.odb` | Generated OpenROAD checkpoint |
+| `build/openroad/noc_mesh_place_opt.v` | Generated optimized netlist |
+| `reports/placement_optimization.log` | Run log |
