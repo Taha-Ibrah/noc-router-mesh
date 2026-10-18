@@ -212,3 +212,88 @@ Paths are relative to `rtl_gds/`.
 | `build/openroad/noc_mesh_place_opt.odb` | Generated OpenROAD checkpoint |
 | `build/openroad/noc_mesh_place_opt.v` | Generated optimized netlist |
 | `reports/placement_optimization.log` | Run log |
+
+## Detailed Placement
+
+| Metric | Value |
+|---|---:|
+| Status | Completed |
+| Timing model | Placement-estimated parasitics; ideal clock |
+| Placement violations before / after | 1,411 / 0 |
+| Illegal cells before / after | 327 / 0 |
+| Average cell displacement | 2.0 µm |
+| Maximum cell displacement | 25.4 µm |
+| Legalized estimated HPWL | 4,083,390.8 µm |
+| Reported HPWL increase | 3% |
+| VDD / VSS connectivity | PASS / PASS |
+| Worst setup slack | +8.830 ns |
+| Setup TNS | 0.000 ns |
+| Worst hold slack | +0.066 ns |
+| Hold TNS | 0.000 ns |
+| Slew violations | 5 |
+| Capacitance violations | 1 |
+| Design area | 824,212 µm² |
+| Reported design utilization | 39% |
+| Total instances | 87,195 |
+
+### Files
+
+Paths are relative to `rtl_gds/`.
+
+| File | Role |
+|---|---|
+| `openroad/07_detailed_placement.tcl` | Stage script (input) |
+| `build/openroad/noc_mesh_detailed_place.def` | Generated legalized-placement DEF |
+| `build/openroad/noc_mesh_detailed_place.odb` | Generated OpenROAD checkpoint |
+| `build/openroad/noc_mesh_detailed_place.v` | Generated netlist |
+| `reports/detailed_placement.log` | Run log |
+| `reports/detailed_placement.json` | Requested report; not generated in this run |
+
+## Clock Tree Synthesis
+
+| Metric | Value |
+|---|---:|
+| Status | Completed; hold repair required |
+| Timing model | Placement-estimated parasitics; propagated clock |
+| Clock period / target frequency | 20.000 ns / 50.00 MHz |
+| Clock roots | 1 |
+| Original clock sinks | 17,408 |
+| Clock buffers inserted | 1,854 |
+| Clock buffer type used | sky130_fd_sc_hd__clkbuf_16 |
+| Dummy balancing loads inserted | 1,593 |
+| Clock subnets created | 1,854 |
+| Leaf buffers | 1,703 |
+| Maximum reported clock-tree level | 7 |
+| CTS runtime | 4.92 s |
+| Final placement violations | 0 |
+| VDD / VSS connectivity | PASS / PASS |
+| Setup status | PASS |
+| Worst setup slack | +7.973 ns |
+| Setup TNS | 0.000 ns |
+| Hold status | FAIL |
+| Worst hold slack | -1.661 ns |
+| Hold TNS | -8,002.737 ns |
+| Reported setup skew (includes uncertainty) | 0.36 ns |
+| Reported hold skew (includes uncertainty) | -0.21 ns |
+| Slew violations | 5 |
+| Capacitance violations | 1 |
+| Electrical status | FAIL |
+| Design area | 885,696 µm² |
+| Reported design utilization | 42% |
+| Total instances | 90,642 |
+| Placed movable instances | 61,434 |
+| Fixed instances | 29,208 |
+
+### Files
+
+Paths are relative to `rtl_gds/`.
+
+| File | Role |
+|---|---|
+| `openroad/08_cts.tcl` | Stage script (input) |
+| `build/openroad/noc_mesh_cts.def` | Generated DEF with clock tree |
+| `build/openroad/noc_mesh_cts.odb` | Generated OpenROAD checkpoint |
+| `build/openroad/noc_mesh_cts.v` | Generated netlist with clock cells |
+| `build/openroad/noc_mesh_cts.sdc` | Generated constraints with propagated clock |
+| `reports/cts.log` | Run log and timing results |
+| `reports/cts_summary.rpt` | Clock-tree counts and cell types |
