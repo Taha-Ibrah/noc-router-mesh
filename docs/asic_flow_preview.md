@@ -15,7 +15,7 @@ _Cells_ - pre-designed, pre-tested functional building blocks provided by foundr
 
 _Driver_ - This is the cell output that sends an electrical signal onto a wire.
 
-_How are slew and capacitance violations caused?_ - **Capacitance violations** happen when a driver has more electrical load than its allowed limit. The load comes from input pins of connected cells, and the connecting wires. **Slew Violations** happen when signal rises of falls too slowly.
+_How are slew and capacitance violations caused?_ - **Capacitance violations** happen when a driver has more electrical load than its allowed limit. The load comes from input pins of connected cells, and the connecting wires. **Slew Violations** happen when signal rises or falls too slowly.
 **EXAMPLE**
 | Capacitance | A driver sees **0.320 pF**, exceeding its **0.048 pF** limit |
 | Slew | Its transition takes **9.195 ns**, exceeding its **1.487 ns** limit |
@@ -106,6 +106,7 @@ _Why is Capacitance so important in ASIC?_ - Capacitance matters because every s
 
 **13: Global Routing:** OpenROAD divides the layout into regions and estimates how many wires each region can accommodate on each metal layer. It then chooses routes that connect the cells while avoiding crowded areas.
     - The main objective it to plan the path that wires will take between cell pins.
+    - Electrical violations may return, but further optimized in later stages.
 
 **14: Routing Optimization:** Imporoves/Optimizes the design using the wire estimates from global routing.
     - Insert of adjust buffers on long/heavily loaded connections.
@@ -115,6 +116,9 @@ _Why is Capacitance so important in ASIC?_ - Capacitance matters because every s
 
 **15: Detailed Routing:** Creates the exact metal wires and vias that connect the cell pins. Must obey the specifications.
     - Checks for unrouted connections, shorts (wires that accidentally connect different nets), and design-rule violations.
+    - Takes considerably longer than the rest of the steps in terminal.
+
+**16: Antenna Check:** Subsection of Detailed routing. Serves as an OPTIONAL repair loop when violations are found. After this is done, reroute and recheck the physical design to ensure there are no violations found within.
 
 **16: Finishing:** Adds the physical structure needed to complete the layout.
     - Filler cells: Occupy gaps between standard cells and maintain continuity of power rails and well structures along rows.

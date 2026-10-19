@@ -1,0 +1,154 @@
+OpenROAD bazel-nostamp 
+Features included (+) or not (-): -GPU +GUI -Python
+This program is licensed under the BSD-3 license. See the LICENSE file for details.
+Components of this program may be licensed under more restrictive licenses which must be honored.
+[WARNING GRT-0281] Net rst_n has a large fanout of 1109 terminals.
+Iteration |   Area    | Resized | Buffers | Nets repaired | Remaining
+---------------------------------------------------------------------
+        0 |     +0.0% |       0 |       0 |             0 |     65489
+    final |     +0.1% |      43 |      33 |            36 |         0
+---------------------------------------------------------------------
+[INFO RSZ-0034] Found 50 slew violations.
+[INFO RSZ-0036] Found 10 capacitance violations.
+[INFO RSZ-0039] Resized 43 instances.
+[INFO RSZ-0038] Inserted 33 buffers in 36 nets.
+[INFO RSZ-0504] Runtime: 4.62s
+[INFO DPL-0006] Core area: 2113997.49 um^2
+[INFO DPL-0007] Movable instances area: 881905.82 um^2
+[INFO DPL-0008] Fixed instances area within core: 39217.61 um^2
+[INFO DPL-0009] Utilization: 43.6%
+[INFO DPL-0005] Diamond search max displacement: +/- 500 sites horizontally, +/- 100 rows vertically.
+[INFO DPL-1102] Legalizing using negotiation legalizer.
+[INFO DPL-1103] Negotiation base search window: +/-20 sites horizontally, +/-5 rows vertically 
+	Automatic search window extension enabled.
+	Search window extendable up to the max displacement cap of +/-500 sites, +/-100 rows near walls.
+[INFO DPL-1104] NegotiationLegalizer DRC penalty: 5.
+[INFO DPL-0392] Negotiation cell height distribution (1 unique row-count(s)):
+[INFO DPL-0393]   height 1 row(s): 93672 cells
+          |      Total |  Illegal |  Illegal
+Iteration | Violations |    Cells |    Sites
+---------------------------------------------
+        0 |          0 |         0 |         0
+Negotiation phase 1 converged at iteration 0.
+[INFO DPL-0500] Runtime: 0.28s
+Placement Analysis
+---------------------------------
+total displacement        284.7 u
+average displacement        0.0 u
+max displacement           16.8 u
+original HPWL         4257717.7 u
+legalized HPWL        4257895.2 u
+delta HPWL                    0 %
+
+[INFO RSZ-0100] Repair move sequence: UnbufferMove SizeUpMove SwapPinsMove BufferMove CloneMove SplitLoadMove 
+[INFO RSZ-0098] No setup violations found
+[INFO RSZ-0505] Runtime: 2.66s
+[INFO RSZ-0046] Found 12 endpoints with hold violations.
+Iteration | Resized | Buffers | Cloned Gates |   Area   |   WNS   |   TNS   | Endpoint
+--------------------------------------------------------------------------------------
+        0 |       0 |       0 |            0 |    +0.0% |  -0.194 |  -1.527 | _72904_/D
+    final |       0 |       3 |            0 |    +0.0% |   0.052 |   0.000 | _75857_/D
+--------------------------------------------------------------------------------------
+[INFO RSZ-0032] Inserted 3 hold buffers.
+[INFO RSZ-0506] Runtime: 0.94s
+[INFO DPL-0006] Core area: 2113997.49 um^2
+[INFO DPL-0007] Movable instances area: 881935.85 um^2
+[INFO DPL-0008] Fixed instances area within core: 39217.61 um^2
+[INFO DPL-0009] Utilization: 43.6%
+[INFO DPL-0005] Diamond search max displacement: +/- 500 sites horizontally, +/- 100 rows vertically.
+[INFO DPL-1102] Legalizing using negotiation legalizer.
+[INFO DPL-1103] Negotiation base search window: +/-20 sites horizontally, +/-5 rows vertically 
+	Automatic search window extension enabled.
+	Search window extendable up to the max displacement cap of +/-500 sites, +/-100 rows near walls.
+[INFO DPL-1104] NegotiationLegalizer DRC penalty: 5.
+[INFO DPL-0392] Negotiation cell height distribution (1 unique row-count(s)):
+[INFO DPL-0393]   height 1 row(s): 93675 cells
+          |      Total |  Illegal |  Illegal
+Iteration | Violations |    Cells |    Sites
+---------------------------------------------
+        0 |          0 |         0 |         0
+Negotiation phase 1 converged at iteration 0.
+[INFO DPL-0500] Runtime: 0.27s
+Placement Analysis
+---------------------------------
+total displacement          6.8 u
+average displacement        0.0 u
+max displacement            3.6 u
+original HPWL         4257904.5 u
+legalized HPWL        4257904.0 u
+delta HPWL                    0 %
+
+[INFO PSM-0040] All shapes on net VDD are connected.
+[INFO PSM-0040] All shapes on net VSS are connected.
+[INFO GRT-0020] Min routing layer: met1
+[INFO GRT-0021] Max routing layer: met5
+[INFO GRT-0022] Global adjustment: 0%
+[INFO GRT-0023] Grid origin: (0, 0)
+[INFO GRT-0088] Layer li1     Track-Pitch = 0.4600  line-2-Via Pitch: 0.3400
+[INFO GRT-0088] Layer met1    Track-Pitch = 0.3400  line-2-Via Pitch: 0.3400
+[INFO GRT-0088] Layer met2    Track-Pitch = 0.4600  line-2-Via Pitch: 0.3500
+[INFO GRT-0088] Layer met3    Track-Pitch = 0.6800  line-2-Via Pitch: 0.6150
+[INFO GRT-0088] Layer met4    Track-Pitch = 0.9200  line-2-Via Pitch: 1.0400
+[INFO GRT-0088] Layer met5    Track-Pitch = 3.4000  line-2-Via Pitch: 3.1100
+[INFO GRT-0003] Macros: 0
+[INFO GRT-0004] Blockages: 375389
+[INFO GRT-0019] Found 1855 clock nets.
+[INFO GRT-0001] Minimum degree: 2
+[INFO GRT-0002] Maximum degree: 152
+
+[INFO GRT-0053] Routing resources analysis:
+          Routing      Original      Derated      Resource
+Layer     Direction    Resources     Resources    Reduction (%)
+---------------------------------------------------------------
+li1        Vertical            0             0          0.00%
+met1       Horizontal     702704        543942          22.59%
+met2       Vertical       606129        466164          23.09%
+met3       Horizontal     450423        353550          21.51%
+met4       Vertical       300427        219148          27.05%
+met5       Horizontal      66682         47314          29.05%
+---------------------------------------------------------------
+
+[INFO GRT-0101] Running extra iterations to remove congestion.
+[INFO GRT-0102] Start extra iteration 1/50
+[INFO GRT-0102] Start extra iteration 2/50
+[INFO GRT-0102] Start extra iteration 3/50
+[INFO GRT-0102] Start extra iteration 4/50
+[INFO GRT-0102] Start extra iteration 5/50
+[INFO GRT-0197] Via related to pin nodes: 446728
+[INFO GRT-0198] Via related Steiner nodes: 17240
+[INFO GRT-0199] Via filling finished.
+[INFO GRT-0111] Final number of vias: 592547
+[INFO GRT-0112] Final usage 3D: 2520819
+
+[INFO GRT-0096] Final congestion report:
+Layer         Resource        Demand        Usage (%)    Max H / Max V / Total Congestion
+---------------------------------------------------------------------------------------
+li1                  0             0            0.00%             0 /  0 /  0
+met1            543942        253111           46.53%             0 /  0 /  0
+met2            466164        262256           56.26%             0 /  0 /  0
+met3            353550        114348           32.34%             0 /  0 /  0
+met4            219148        107544           49.07%             0 /  0 /  0
+met5             47314          5919           12.51%             0 /  0 /  0
+---------------------------------------------------------------------------------------
+Total          1630118        743178           45.59%             0 /  0 /  0
+
+[INFO GRT-0018] Total wirelength: 6651827 um
+[INFO GRT-0014] Routed nets: 63932
+[INFO GRT-0303] Global routing runtime = 00:00:13
+
+ROUTING OPTIMIZATION METRICS
+Design area 917145 um^2 43% utilization.
+
+Setup timing:
+worst slack max 7.288
+tns max 0.000
+
+Hold timing:
+worst slack min 0.060
+tns min 0.000
+
+Electrical checks:
+Slew violations: 43
+Capacitance violations: 11
+
+Routing optimization saved.
