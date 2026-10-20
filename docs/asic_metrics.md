@@ -297,3 +297,210 @@ Paths are relative to `rtl_gds/`.
 | `build/openroad/noc_mesh_cts.sdc` | Generated constraints with propagated clock |
 | `reports/cts.log` | Run log and timing results |
 | `reports/cts_summary.rpt` | Clock-tree counts and cell types |
+
+## Post-CTS Optimization
+
+| Metric | Value |
+|---|---:|
+| Status | Completed |
+| Timing model | Placement-estimated parasitics; propagated clock |
+| Initial hold-violating endpoints | 8,106 |
+| Hold buffers inserted | 2,997 |
+| Cells resized during electrical repair | 1 |
+| Cells resized during hold repair | 49 |
+| Final placement violations | 0 |
+| VDD / VSS connectivity | PASS / PASS |
+| Worst setup slack | +7.973 ns |
+| Setup WNS / TNS | 0.000 / 0.000 ns |
+| Worst hold slack after legalization | +0.042 ns |
+| Hold WNS / TNS | 0.000 / 0.000 ns |
+| Setup / hold status | PASS / PASS |
+| Slew violations | 0 |
+| Capacitance violations | 0 |
+| Electrical status | PASS |
+| Design area | 916,185 µm² |
+| Reported design utilization | 43% |
+| Total instances | 93,639 |
+
+### Files
+
+Paths are relative to `rtl_gds/`.
+
+| File | Role |
+|---|---|
+| `openroad/09_post_cts_optimization.tcl` | Stage script (input) |
+| `build/openroad/noc_mesh_post_cts.def` | Generated post-CTS DEF |
+| `build/openroad/noc_mesh_post_cts.odb` | Generated post-CTS OpenROAD checkpoint |
+| `build/openroad/noc_mesh_post_cts.v` | Generated post-CTS V |
+| `build/openroad/noc_mesh_post_cts.sdc` | Generated post-CTS SDC |
+| `reports/post_cts_optimization.log` | Run log and metrics |
+| `reports/post_cts_hold.rpt` | Detailed hold-path report |
+
+## Global Routing
+
+| Metric | Value |
+|---|---:|
+| Status | Completed |
+| Timing model | Global-routing-estimated parasitics; propagated clock |
+| Signal routing layers | met1–met5 |
+| Clock routing layers | met3–met5 |
+| Routing capacity reduction setting | 20% |
+| Routed nets | 63,896 |
+| Final routing overflow | 0 |
+| Average routing resource usage | 45.53% |
+| Estimated wire length | 6,642,981 µm |
+| Planned vias | 591,625 |
+| Global routing runtime | 13 s |
+| Worst setup slack | +7.412 ns |
+| Setup TNS | 0.000 ns |
+| Worst hold slack | +0.052 ns |
+| Hold TNS | 0.000 ns |
+| Setup / hold status | PASS / PASS |
+| Slew violations | 1,225 |
+| Capacitance violations | 33 |
+| Electrical status | FAIL |
+| Reset net terminals before reset repair | 1,109 |
+| Design area | 916,185 µm² |
+| Reported design utilization | 43% |
+| Total instances | 93,639 |
+
+### Files
+
+Paths are relative to `rtl_gds/`.
+
+| File | Role |
+|---|---|
+| `openroad/10_global_routing.tcl` | Stage script (input) |
+| `build/openroad/noc_mesh_global_route.def` | Generated global-routing DEF |
+| `build/openroad/noc_mesh_global_route.odb` | Generated global-routing OpenROAD checkpoint |
+| `build/openroad/noc_mesh_global_route.v` | Generated global-routing V |
+| `build/openroad/noc_mesh_global_route.sdc` | Generated global-routing SDC |
+| `build/openroad/noc_mesh_global_route.guide` | Routing guides |
+| `build/openroad/noc_mesh_global_route.segments` | Global-route segments |
+| `build/openroad/noc_mesh_global_route_est.spef` | Estimated global-route parasitics |
+| `reports/global_routing.log` | Run log, congestion table, and timing metrics |
+| `reports/global_route_congestion.rpt` | Requested report; not generated in this run |
+
+## Routing Optimization
+
+| Metric | Value |
+|---|---:|
+| Status | Completed; electrical repair incomplete |
+| Timing model | Global-routing-estimated parasitics; propagated clock |
+| Electrical-repair buffers inserted | 33 |
+| Cells resized during electrical repair | 43 |
+| Nets repaired during electrical repair | 36 |
+| Additional hold buffers inserted | 3 |
+| Final placement violations | 0 |
+| VDD / VSS connectivity | PASS / PASS |
+| Final routing overflow | 0 |
+| Routed nets | 63,932 |
+| Estimated wire length | 6,651,827 µm |
+| Planned vias | 592,547 |
+| Worst setup slack | +7.288 ns |
+| Setup TNS | 0.000 ns |
+| Worst hold slack | +0.060 ns |
+| Hold TNS | 0.000 ns |
+| Setup / hold status | PASS / PASS |
+| Slew violations | 43 |
+| Capacitance violations | 11 |
+| Electrical status | FAIL |
+| Design area | 917,145 µm² |
+| Reported design utilization | 43% |
+| Total instances | 93,675 |
+
+### Files
+
+Paths are relative to `rtl_gds/`.
+
+| File | Role |
+|---|---|
+| `openroad/11_routing_optimization.tcl` | Stage script (input) |
+| `build/openroad/noc_mesh_route_opt.def` | Generated optimized-routing DEF |
+| `build/openroad/noc_mesh_route_opt.odb` | Generated optimized-routing OpenROAD checkpoint |
+| `build/openroad/noc_mesh_route_opt.v` | Generated optimized-routing V |
+| `build/openroad/noc_mesh_route_opt.sdc` | Generated optimized-routing SDC |
+| `build/openroad/noc_mesh_route_opt.guide` | Updated routing guides |
+| `build/openroad/noc_mesh_route_opt.segments` | Updated global-route segments |
+| `build/openroad/noc_mesh_route_opt_est.spef` | Estimated global-route parasitics |
+| `reports/routing_optimization.log` | Run log and metrics |
+| `reports/routing_optimization_electrical.rpt` | Remaining slew and capacitance violations |
+
+## Detailed Routing
+
+| Metric | Value |
+|---|---:|
+| Status | Completed; antenna repair required |
+| All signal nets routed | YES |
+| Final router geometry violations | 0 |
+| Antenna-violating nets | 1,038 |
+| Antenna-violating pins | 1,685 |
+| Antenna status | FAIL |
+| Final routing iteration label | 39 |
+| Routed wire length | 5,384,826 µm |
+| Routed vias | 670,996 |
+| Detailed-router reported runtime | 12,657.19 s |
+| Reported peak memory | 4,294.33 MB |
+| Design area | 917,145 µm² |
+| Reported design utilization | 43% |
+| Total instances | 93,675 |
+| Extracted post-route setup / hold analysis | Not run |
+| Post-route slew / capacitance counts | Not measured |
+
+### Files
+
+Paths are relative to `rtl_gds/`.
+
+| File | Role |
+|---|---|
+| `openroad/12_detailed_routing.tcl` | Stage script (input) |
+| `build/openroad/noc_mesh_detailed_route.def` | Generated detailed-routing DEF |
+| `build/openroad/noc_mesh_detailed_route.odb` | Generated detailed-routing OpenROAD checkpoint |
+| `build/openroad/noc_mesh_detailed_route.v` | Generated detailed-routing V |
+| `build/openroad/noc_mesh_detailed_route.sdc` | Generated detailed-routing SDC |
+| `reports/detailed_routing.log` | Run log and final routing metrics |
+| `reports/detailed_routing_drc.rpt` | Final router DRC report; empty (0 violations) |
+| `reports/detailed_routing_antenna.rpt` | Antenna report before repair |
+
+## Antenna Repair — Pass 1
+
+| Metric | Value |
+|---|---:|
+| Status | Completed; antenna repair incomplete |
+| Diodes inserted | 2,499 |
+| Diode cell | sky130_fd_sc_hd__diode_2 |
+| Initial / final antenna-violating nets | 1,038 / 62 |
+| Initial / final antenna-violating pins | 1,685 / 80 |
+| Antenna status | FAIL |
+| All signal nets routed | YES |
+| Final router geometry violations | 0 |
+| Final routing iteration label | 60 |
+| Routed wire length | 5,384,349 µm |
+| Routed vias | 690,585 |
+| Detailed-router reported runtime | 35,938.54 s |
+| Reported peak memory | 4,185.58 MB |
+| Design area | 923,398 µm² |
+| Reported design utilization | 44% |
+| Total instances | 96,174 |
+| Extracted post-route setup / hold analysis | Not run |
+| Post-route slew / capacitance counts | Not measured |
+
+### Files
+
+Paths are relative to `rtl_gds/`.
+
+| File | Role |
+|---|---|
+| `openroad/13_antenna_repair.tcl` | Stage script (input) |
+| `build/openroad/noc_mesh_antenna_repair_before_reroute.def` | Intermediate diode-insertion DEF |
+| `build/openroad/noc_mesh_antenna_repair_before_reroute.odb` | Intermediate diode-insertion OpenROAD checkpoint |
+| `build/openroad/noc_mesh_antenna_repair_before_reroute.sdc` | Intermediate diode-insertion SDC |
+| `build/openroad/noc_mesh_antenna_repair_before_reroute.guide` | Intermediate routing guides |
+| `build/openroad/noc_mesh_antenna_repair.def` | Generated routed antenna-repair DEF |
+| `build/openroad/noc_mesh_antenna_repair.odb` | Generated routed antenna-repair OpenROAD checkpoint |
+| `build/openroad/noc_mesh_antenna_repair.v` | Generated routed antenna-repair V |
+| `build/openroad/noc_mesh_antenna_repair.sdc` | Generated routed antenna-repair SDC |
+| `reports/antenna_repair.log` | Diode-insertion and rerouting log |
+| `reports/antenna_repair_drc.rpt` | Final router DRC report; empty (0 violations) |
+| `reports/antenna_repair_drc.rpt-*.rpt` | Historical DRC reports from routing iterations |
+| `reports/antenna_repair_antenna.rpt` | Latest remaining antenna violations |

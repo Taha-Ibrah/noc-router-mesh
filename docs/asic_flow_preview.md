@@ -15,10 +15,63 @@ _Cells_ - pre-designed, pre-tested functional building blocks provided by foundr
 
 _Driver_ - This is the cell output that sends an electrical signal onto a wire.
 
-_How are slew and capacitance violations caused?_ - **Capacitance violations** happen when a driver has more electrical load than its allowed limit. The load comes from input pins of connected cells, and the connecting wires. **Slew Violations** happen when signal rises or falls too slowly.
-**EXAMPLE**
+__How are common ASIC violations caused?__
+
+**Capacitance violations** happen when a driver has more electrical load than its allowed limit. The load comes from input pins of connected cells and the connecting wires.
+
+**Slew violations** happen when a signal rises or falls more slowly than its allowed transition-time limit.
+
+**Setup violations** happen when data arrives too late to meet the receiving register's setup deadline.
+
+**Hold violations** happen when new data arrives too early, before the receiving register's hold requirement is satisfied.
+
+**Fanout violations** happen when a driver's total fanout load exceeds its allowed limit. Fanout load may use weighted pin loads rather than a simple pin count.
+
+**Antenna violations** happen when exposed metal or via area relative to connected transistor gate area exceeds the manufacturing antenna rules, accounting for protective diode diffusion. Charge collected during plasma etching can damage the gate oxide.
+
+**Short violations** happen when conductive shapes unintentionally connect nets that should remain separate.
+
+**Metal-spacing violations** happen when metal shapes are closer together than the applicable spacing rule allows.
+
+**Via/cut-spacing violations** happen when contact or via cuts are closer together than their required minimum spacing.
+
+**Minimum-geometry violations** happen when a wire is too narrow, a metal shape has too little area, or an enclosed hole is smaller than the applicable rule permits.
+
+**Placement violations** happen when cells overlap, extend outside allowed placement regions, or do not occupy legal row sites and orientations.
+
+**Unrouted/open connections** happen when a required connection has no continuous conductive path between its pins.
+
+**Metal-density violations** happen when the metal coverage inside a specified checking window falls outside the permitted range.
+
+**LVS mismatches** happen when the circuit extracted from the layout differs from the reference netlist in devices or connections. LVS means Layout Versus Schematic.
+
+**IR-drop violations** happen when voltage lost through the power network exceeds the selected supply-drop budget.
+
+**EXAMPLES**
+
+These examples illustrate failing checks; they are not a list of current project violations. Limits depend on the applicable library, constraints, and process rules.
+
+| Violation | Example |
+|---|---|
 | Capacitance | A driver sees **0.320 pF**, exceeding its **0.048 pF** limit |
 | Slew | Its transition takes **9.195 ns**, exceeding its **1.487 ns** limit |
+| Setup | Data arrives at **19.40 ns**, after its **19.00 ns** deadline: slack is **-0.40 ns** |
+| Hold | New data arrives at **0.10 ns**, but must not arrive before **0.20 ns**: slack is **-0.10 ns** |
+| Fanout | A driver sees **64 unit-weight loads**, exceeding a fanout limit of **32** |
+| Antenna | A measured antenna ratio is **476.02**, exceeding its allowed ratio of **400.00** |
+| Short | Metal belonging to **net A** touches metal belonging to **net B**, electrically connecting them |
+| Metal spacing | Two met1 wires are **0.10 µm** apart where the applicable minimum spacing is **0.14 µm** |
+| Via/cut spacing | Two via cuts are **0.10 µm** apart where the applicable minimum spacing is **0.17 µm** |
+| Minimum wire width | A met1 wire is **0.10 µm** wide where the applicable minimum width is **0.14 µm** |
+| Minimum metal area | A met1 shape has **0.050 µm²** area where the applicable minimum is **0.083 µm²** |
+| Minimum hole area | A hole enclosed by met1 has **0.080 µm²** area where the applicable minimum is **0.140 µm²** |
+| Placement | Two standard cells occupy **the same row sites**, causing an overlap |
+| Unrouted/open | A driver output and its receiving input **have no continuous wire-and-via connection** |
+| Metal density | A checking window has **20% metal coverage**, below an illustrative **30% minimum** |
+| LVS | The reference netlist connects **A to B**, but the extracted layout connects **A to C** |
+| IR drop | A **1.80 V** supply reaches a cell at **1.60 V**: the **0.20 V** drop exceeds an illustrative **0.10 V** budget |
+
+References: [SKY130 antenna rules](https://skywater-pdk.readthedocs.io/en/main/rules/antenna.html), [OpenROAD electrical/timing repair](https://openroad.readthedocs.io/en/latest/main/src/rsz/README.html), [KLayout LVS](https://www.klayout.de/doc/manual/lvs_intro.html).
 
 _Why is Capacitance so important in ASIC?_ - Capacitance matters because every signal transition requires movement of electrical charge. A driver must charge a connection to raise its voltage and discharge it to lower its voltage.
 
@@ -119,6 +172,7 @@ _Why is Capacitance so important in ASIC?_ - Capacitance matters because every s
     - Takes considerably longer than the rest of the steps in terminal.
 
 **16: Antenna Check:** Subsection of Detailed routing. Serves as an OPTIONAL repair loop when violations are found. After this is done, reroute and recheck the physical design to ensure there are no violations found within.
+    - Several passes may be done in order to fix violating nets / failing pins.
 
 **16: Finishing:** Adds the physical structure needed to complete the layout.
     - Filler cells: Occupy gaps between standard cells and maintain continuity of power rails and well structures along rows.
