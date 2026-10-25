@@ -1,2 +1,4 @@
 
 /rtl_gds/build/openroad/*.odb
+
+/rtl_gds/build/openroad/*.spef

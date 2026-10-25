@@ -1,0 +1,309 @@
+Startpoint: local_input_valid[6] (input port clocked by clk)
+Endpoint: _74607_ (rising edge-triggered flip-flop clocked by clk)
+Path Group: clk
+Path Type: min
+
+Fanout     Cap    Slew   Delay    Time   Description
+-----------------------------------------------------------------------------
+                          0.00    0.00   clock clk (rise edge)
+                          0.00    0.00   clock network delay (propagated)
+                          0.00    0.00 v input external delay
+     2    0.04    0.10    0.00    0.00 v local_input_valid[6] (in)
+     1    0.04    0.21    0.74    0.74 v hold12829/X (sky130_fd_sc_hd__dlygate4sd3_1)
+     4    0.03    0.26    0.38    1.13 v _66600_/X (sky130_fd_sc_hd__and2_0)
+     3    0.01    0.08    0.33    1.46 v _67497_/X (sky130_fd_sc_hd__or2_0)
+     2    0.01    0.07    0.18    1.64 v _67499_/X (sky130_fd_sc_hd__and2_0)
+     1    0.00    0.04    0.13    1.77 v _67500_/Y (sky130_fd_sc_hd__xnor2_1)
+                  0.04    0.00    1.77 v _74607_/D (sky130_fd_sc_hd__dfrtp_1)
+                                  1.77   data arrival time
+
+                          0.00    0.00   clock clk (rise edge)
+                          1.71    1.71   clock network delay (propagated)
+                          0.05    1.76   clock uncertainty
+                          0.00    1.76   clock reconvergence pessimism
+                                  1.76 ^ _74607_/CLK (sky130_fd_sc_hd__dfrtp_1)
+                         -0.04    1.72   library hold time
+                                  1.72   data required time
+-----------------------------------------------------------------------------
+                                  1.72   data required time
+                                 -1.77   data arrival time
+-----------------------------------------------------------------------------
+                                  0.05   slack (MET)
+
+
+Startpoint: local_input_flits[616] (input port clocked by clk)
+Endpoint: _69273_ (rising edge-triggered flip-flop clocked by clk)
+Path Group: clk
+Path Type: min
+
+Fanout     Cap    Slew   Delay    Time   Description
+-----------------------------------------------------------------------------
+                          0.00    0.00   clock clk (rise edge)
+                          0.00    0.00   clock network delay (propagated)
+                          0.00    0.00 v input external delay
+     2    0.03    0.10    0.00    0.00 v local_input_flits[616] (in)
+     1    0.02    0.15    0.69    0.69 v hold12201/X (sky130_fd_sc_hd__dlygate4sd3_1)
+     4    0.05    0.26    0.80    1.49 v hold12199/X (sky130_fd_sc_hd__dlygate4sd3_1)
+                  0.26    0.01    1.50 v _69273_/D (sky130_fd_sc_hd__edfxtp_1)
+                                  1.50   data arrival time
+
+                          0.00    0.00   clock clk (rise edge)
+                          1.64    1.64   clock network delay (propagated)
+                          0.05    1.69   clock uncertainty
+                          0.00    1.69   clock reconvergence pessimism
+                                  1.69 ^ _69273_/CLK (sky130_fd_sc_hd__edfxtp_1)
+                         -0.25    1.43   library hold time
+                                  1.43   data required time
+-----------------------------------------------------------------------------
+                                  1.43   data required time
+                                 -1.50   data arrival time
+-----------------------------------------------------------------------------
+                                  0.06   slack (MET)
+
+
+Startpoint: local_input_flits[616] (input port clocked by clk)
+Endpoint: _69337_ (rising edge-triggered flip-flop clocked by clk)
+Path Group: clk
+Path Type: min
+
+Fanout     Cap    Slew   Delay    Time   Description
+-----------------------------------------------------------------------------
+                          0.00    0.00   clock clk (rise edge)
+                          0.00    0.00   clock network delay (propagated)
+                          0.00    0.00 v input external delay
+     2    0.03    0.10    0.00    0.00 v local_input_flits[616] (in)
+     1    0.02    0.15    0.69    0.69 v hold12201/X (sky130_fd_sc_hd__dlygate4sd3_1)
+     4    0.05    0.26    0.80    1.49 v hold12199/X (sky130_fd_sc_hd__dlygate4sd3_1)
+                  0.26    0.01    1.50 v _69337_/D (sky130_fd_sc_hd__edfxtp_1)
+                                  1.50   data arrival time
+
+                          0.00    0.00   clock clk (rise edge)
+                          1.64    1.64   clock network delay (propagated)
+                          0.05    1.69   clock uncertainty
+                          0.00    1.69   clock reconvergence pessimism
+                                  1.69 ^ _69337_/CLK (sky130_fd_sc_hd__edfxtp_1)
+                         -0.25    1.43   library hold time
+                                  1.43   data required time
+-----------------------------------------------------------------------------
+                                  1.43   data required time
+                                 -1.50   data arrival time
+-----------------------------------------------------------------------------
+                                  0.07   slack (MET)
+
+
+Startpoint: local_input_flits[616] (input port clocked by clk)
+Endpoint: _69404_ (rising edge-triggered flip-flop clocked by clk)
+Path Group: clk
+Path Type: min
+
+Fanout     Cap    Slew   Delay    Time   Description
+-----------------------------------------------------------------------------
+                          0.00    0.00   clock clk (rise edge)
+                          0.00    0.00   clock network delay (propagated)
+                          0.00    0.00 v input external delay
+     2    0.03    0.10    0.00    0.00 v local_input_flits[616] (in)
+     1    0.02    0.15    0.69    0.69 v hold12201/X (sky130_fd_sc_hd__dlygate4sd3_1)
+     4    0.05    0.26    0.80    1.49 v hold12199/X (sky130_fd_sc_hd__dlygate4sd3_1)
+                  0.26    0.01    1.50 v _69404_/D (sky130_fd_sc_hd__edfxtp_1)
+                                  1.50   data arrival time
+
+                          0.00    0.00   clock clk (rise edge)
+                          1.64    1.64   clock network delay (propagated)
+                          0.05    1.69   clock uncertainty
+                          0.00    1.69   clock reconvergence pessimism
+                                  1.69 ^ _69404_/CLK (sky130_fd_sc_hd__edfxtp_1)
+                         -0.25    1.43   library hold time
+                                  1.43   data required time
+-----------------------------------------------------------------------------
+                                  1.43   data required time
+                                 -1.50   data arrival time
+-----------------------------------------------------------------------------
+                                  0.07   slack (MET)
+
+
+Startpoint: local_input_flits[616] (input port clocked by clk)
+Endpoint: _69209_ (rising edge-triggered flip-flop clocked by clk)
+Path Group: clk
+Path Type: min
+
+Fanout     Cap    Slew   Delay    Time   Description
+-----------------------------------------------------------------------------
+                          0.00    0.00   clock clk (rise edge)
+                          0.00    0.00   clock network delay (propagated)
+                          0.00    0.00 v input external delay
+     2    0.03    0.10    0.00    0.00 v local_input_flits[616] (in)
+     1    0.02    0.15    0.69    0.69 v hold12201/X (sky130_fd_sc_hd__dlygate4sd3_1)
+     4    0.05    0.26    0.80    1.49 v hold12199/X (sky130_fd_sc_hd__dlygate4sd3_1)
+                  0.26    0.01    1.50 v _69209_/D (sky130_fd_sc_hd__edfxtp_1)
+                                  1.50   data arrival time
+
+                          0.00    0.00   clock clk (rise edge)
+                          1.64    1.64   clock network delay (propagated)
+                          0.05    1.69   clock uncertainty
+                          0.00    1.69   clock reconvergence pessimism
+                                  1.69 ^ _69209_/CLK (sky130_fd_sc_hd__edfxtp_1)
+                         -0.25    1.43   library hold time
+                                  1.43   data required time
+-----------------------------------------------------------------------------
+                                  1.43   data required time
+                                 -1.50   data arrival time
+-----------------------------------------------------------------------------
+                                  0.07   slack (MET)
+
+
+Startpoint: local_input_valid[6] (input port clocked by clk)
+Endpoint: _74608_ (rising edge-triggered flip-flop clocked by clk)
+Path Group: clk
+Path Type: min
+
+Fanout     Cap    Slew   Delay    Time   Description
+-----------------------------------------------------------------------------
+                          0.00    0.00   clock clk (rise edge)
+                          0.00    0.00   clock network delay (propagated)
+                          0.00    0.00 v input external delay
+     2    0.04    0.10    0.00    0.00 v local_input_valid[6] (in)
+     1    0.04    0.21    0.74    0.74 v hold12829/X (sky130_fd_sc_hd__dlygate4sd3_1)
+     4    0.03    0.26    0.38    1.13 v _66600_/X (sky130_fd_sc_hd__and2_0)
+     3    0.01    0.08    0.33    1.46 v _67497_/X (sky130_fd_sc_hd__or2_0)
+     1    0.00    0.14    0.16    1.62 ^ _67503_/Y (sky130_fd_sc_hd__mux2i_1)
+     1    0.00    0.04    0.11    1.72 ^ _67504_/X (sky130_fd_sc_hd__a21o_1)
+                  0.04    0.00    1.72 ^ _74608_/D (sky130_fd_sc_hd__dfrtp_1)
+                                  1.72   data arrival time
+
+                          0.00    0.00   clock clk (rise edge)
+                          1.64    1.64   clock network delay (propagated)
+                          0.05    1.69   clock uncertainty
+                          0.00    1.69   clock reconvergence pessimism
+                                  1.69 ^ _74608_/CLK (sky130_fd_sc_hd__dfrtp_1)
+                         -0.03    1.66   library hold time
+                                  1.66   data required time
+-----------------------------------------------------------------------------
+                                  1.66   data required time
+                                 -1.72   data arrival time
+-----------------------------------------------------------------------------
+                                  0.07   slack (MET)
+
+
+Startpoint: local_input_valid[6] (input port clocked by clk)
+Endpoint: _74609_ (rising edge-triggered flip-flop clocked by clk)
+Path Group: clk
+Path Type: min
+
+Fanout     Cap    Slew   Delay    Time   Description
+-----------------------------------------------------------------------------
+                          0.00    0.00   clock clk (rise edge)
+                          0.00    0.00   clock network delay (propagated)
+                          0.00    0.00 v input external delay
+     2    0.04    0.10    0.00    0.00 v local_input_valid[6] (in)
+     1    0.04    0.21    0.74    0.74 v hold12829/X (sky130_fd_sc_hd__dlygate4sd3_1)
+     4    0.03    0.26    0.38    1.13 v _66600_/X (sky130_fd_sc_hd__and2_0)
+     3    0.01    0.08    0.33    1.46 v _67497_/X (sky130_fd_sc_hd__or2_0)
+     1    0.01    0.22    0.23    1.69 ^ _67505_/Y (sky130_fd_sc_hd__o22ai_1)
+     1    0.00    0.04    0.10    1.79 v _67506_/X (sky130_fd_sc_hd__xor2_1)
+                  0.04    0.00    1.79 v _74609_/D (sky130_fd_sc_hd__dfrtp_1)
+                                  1.79   data arrival time
+
+                          0.00    0.00   clock clk (rise edge)
+                          1.71    1.71   clock network delay (propagated)
+                          0.05    1.76   clock uncertainty
+                          0.00    1.76   clock reconvergence pessimism
+                                  1.76 ^ _74609_/CLK (sky130_fd_sc_hd__dfrtp_1)
+                         -0.04    1.72   library hold time
+                                  1.72   data required time
+-----------------------------------------------------------------------------
+                                  1.72   data required time
+                                 -1.79   data arrival time
+-----------------------------------------------------------------------------
+                                  0.07   slack (MET)
+
+
+Startpoint: local_input_flits[443] (input port clocked by clk)
+Endpoint: _74669_ (rising edge-triggered flip-flop clocked by clk)
+Path Group: clk
+Path Type: min
+
+Fanout     Cap    Slew   Delay    Time   Description
+-----------------------------------------------------------------------------
+                          0.00    0.00   clock clk (rise edge)
+                          0.00    0.00   clock network delay (propagated)
+                          0.00    0.00 v input external delay
+     2    0.03    0.10    0.00    0.00 v local_input_flits[443] (in)
+     1    0.03    0.16    0.70    0.70 v hold12141/X (sky130_fd_sc_hd__dlygate4sd3_1)
+     4    0.06    0.30    0.83    1.53 v hold12097/X (sky130_fd_sc_hd__dlygate4sd3_1)
+                  0.30    0.01    1.55 v _74669_/D (sky130_fd_sc_hd__edfxtp_1)
+                                  1.55   data arrival time
+
+                          0.00    0.00   clock clk (rise edge)
+                          1.67    1.67   clock network delay (propagated)
+                          0.05    1.72   clock uncertainty
+                          0.00    1.72   clock reconvergence pessimism
+                                  1.72 ^ _74669_/CLK (sky130_fd_sc_hd__edfxtp_1)
+                         -0.27    1.46   library hold time
+                                  1.46   data required time
+-----------------------------------------------------------------------------
+                                  1.46   data required time
+                                 -1.55   data arrival time
+-----------------------------------------------------------------------------
+                                  0.09   slack (MET)
+
+
+Startpoint: local_input_flits[447] (input port clocked by clk)
+Endpoint: _74673_ (rising edge-triggered flip-flop clocked by clk)
+Path Group: clk
+Path Type: min
+
+Fanout     Cap    Slew   Delay    Time   Description
+-----------------------------------------------------------------------------
+                          0.00    0.00   clock clk (rise edge)
+                          0.00    0.00   clock network delay (propagated)
+                          0.00    0.00 v input external delay
+     2    0.03    0.10    0.00    0.00 v local_input_flits[447] (in)
+     1    0.03    0.16    0.69    0.69 v hold12155/X (sky130_fd_sc_hd__dlygate4sd3_1)
+     4    0.05    0.27    0.81    1.51 v hold12154/X (sky130_fd_sc_hd__dlygate4sd3_1)
+                  0.27    0.01    1.52 v _74673_/D (sky130_fd_sc_hd__edfxtp_1)
+                                  1.52   data arrival time
+
+                          0.00    0.00   clock clk (rise edge)
+                          1.63    1.63   clock network delay (propagated)
+                          0.05    1.68   clock uncertainty
+                          0.00    1.68   clock reconvergence pessimism
+                                  1.68 ^ _74673_/CLK (sky130_fd_sc_hd__edfxtp_1)
+                         -0.26    1.43   library hold time
+                                  1.43   data required time
+-----------------------------------------------------------------------------
+                                  1.43   data required time
+                                 -1.52   data arrival time
+-----------------------------------------------------------------------------
+                                  0.09   slack (MET)
+
+
+Startpoint: local_input_flits[447] (input port clocked by clk)
+Endpoint: _74542_ (rising edge-triggered flip-flop clocked by clk)
+Path Group: clk
+Path Type: min
+
+Fanout     Cap    Slew   Delay    Time   Description
+-----------------------------------------------------------------------------
+                          0.00    0.00   clock clk (rise edge)
+                          0.00    0.00   clock network delay (propagated)
+                          0.00    0.00 v input external delay
+     2    0.03    0.10    0.00    0.00 v local_input_flits[447] (in)
+     1    0.03    0.16    0.69    0.69 v hold12155/X (sky130_fd_sc_hd__dlygate4sd3_1)
+     4    0.05    0.27    0.81    1.51 v hold12154/X (sky130_fd_sc_hd__dlygate4sd3_1)
+                  0.27    0.01    1.52 v _74542_/D (sky130_fd_sc_hd__edfxtp_1)
+                                  1.52   data arrival time
+
+                          0.00    0.00   clock clk (rise edge)
+                          1.63    1.63   clock network delay (propagated)
+                          0.05    1.68   clock uncertainty
+                          0.00    1.68   clock reconvergence pessimism
+                                  1.68 ^ _74542_/CLK (sky130_fd_sc_hd__edfxtp_1)
+                         -0.26    1.43   library hold time
+                                  1.43   data required time
+-----------------------------------------------------------------------------
+                                  1.43   data required time
+                                 -1.52   data arrival time
+-----------------------------------------------------------------------------
+                                  0.09   slack (MET)
+
+

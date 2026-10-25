@@ -1,0 +1,37 @@
+OpenROAD bazel-nostamp 
+Features included (+) or not (-): -GPU +GUI -Python
+This program is licensed under the BSD-3 license. See the LICENSE file for details.
+Components of this program may be licensed under more restrictive licenses which must be honored.
+[INFO RCX-0431] Defined process_corner nominal with ext_model_index 0
+[INFO RCX-0029] Defined extraction corner nominal
+[INFO RCX-0435] Reading extraction model file /Users/taha.ibrah/.ciel/sky130A/libs.tech/librelane/rules.openrcx.sky130A.nom.calibre ...
+[INFO RCX-0436] RC segment generation noc_mesh (max_merge_res 50.0) ...
+[INFO RCX-0040] Final 368775 rc segments
+[INFO RCX-0439] Coupling Cap extraction noc_mesh ...
+[INFO RCX-0440] Coupling threshhold is 0.1000 fF, coupling capacitance less than 0.1000 fF will be grounded.
+[INFO RCX-0442] 12% of 912002 wires extracted
+[INFO RCX-0442] 34% of 912002 wires extracted
+[INFO RCX-0442] 54% of 912002 wires extracted
+[INFO RCX-0442] 64% of 912002 wires extracted
+[INFO RCX-0442] 83% of 912002 wires extracted
+[INFO RCX-0442] 100% of 912002 wires extracted
+[INFO RCX-0045] Extract 63932 nets, 432707 rsegs, 432707 caps, 1124163 ccs
+[INFO RCX-0443] 63932 nets finished
+
+POST-ROUTE TIMING — TT 25 C / 1.8 V, NOMINAL RC
+
+Setup:
+worst slack max 7.16
+wns max 0.00
+tns max 0.00
+
+Hold:
+worst slack min 0.05
+wns min 0.00
+tns min 0.00
+
+Slew violations: 178
+Capacitance violations: 43
+
+SPEF saved: /Users/taha.ibrah/Downloads/noc-router-mesh/rtl_gds/build/openroad/noc_mesh_post_route.spef
+Reports saved: /Users/taha.ibrah/Downloads/noc-router-mesh/rtl_gds/reports/post_route_*.rpt
