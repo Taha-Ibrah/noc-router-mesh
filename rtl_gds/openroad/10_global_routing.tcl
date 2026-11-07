@@ -1,3 +1,13 @@
+# === REPAIR/REROUTE PURPOSE HEADER ============================================
+# PURPOSE: BUILD THE INITIAL GLOBAL-ROUTING PLAN FOR THE POST-CTS DESIGN.
+# GOAL: FIND METAL-LAYER ROUTING CORRIDORS WITH MANAGEABLE CONGESTION AND PRODUCE BETTER
+#       WIRE ESTIMATES FOR THE NEXT REPAIR STAGE.
+# HOW IT WORKS: USE MET1-MET5 FOR SIGNALS AND MET3-MET5 FOR CLOCKS, REDUCE ASSUMED
+#               ROUTING CAPACITY BY 20%, AND ALLOW UP TO 50 CONGESTION ITERATIONS. SAVE
+#               GUIDES, ROUTE SEGMENTS, AND ESTIMATED SPEF; DETAILED WIRING FOLLOWS IN
+#               LATER STAGES.
+# ============================================================================
+
 # Locate the project and SKY130 library.
 set PROJECT_DIR [file normalize [file join [file dirname [info script]] ..]]
 set CELL_DIR /Users/taha.ibrah/.ciel/sky130A/libs.ref/sky130_fd_sc_hd

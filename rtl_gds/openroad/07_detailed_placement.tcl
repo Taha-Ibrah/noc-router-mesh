@@ -1,3 +1,12 @@
+# === REPAIR/REROUTE PURPOSE HEADER ============================================
+# PURPOSE: LEGALIZE CELL PLACEMENT AFTER PLACEMENT-STAGE ELECTRICAL OPTIMIZATION.
+# GOAL: REMOVE CELL OVERLAPS AND ROW/SITE PLACEMENT ERRORS BEFORE CLOCK-TREE SYNTHESIS.
+# HOW IT WORKS: MOVE CELLS ONTO LEGAL PLACEMENT SITES, CHECK PLACEMENT AND VDD/VSS GRID
+#               CONNECTIVITY, UPDATE PLACEMENT-BASED PARASITICS, AND SAVE THE LEGALIZED
+#               DESIGN. THIS STAGE REPAIRS PHYSICAL PLACEMENT RATHER THAN INSERTING
+#               ANTENNA DIODES.
+# ============================================================================
+
 # Locate the project and SKY130 library.
 set PROJECT_DIR [file normalize [file join [file dirname [info script]] ..]]
 set CELL_DIR /Users/taha.ibrah/.ciel/sky130A/libs.ref/sky130_fd_sc_hd

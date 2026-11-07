@@ -2,3 +2,6 @@
 /rtl_gds/build/openroad/*.odb
 
 /rtl_gds/build/openroad/*.spef
+
+# Optional per-iteration router DRC snapshots; retain final reports and logs.
+/rtl_gds/reports/*_drc.rpt-[0-9]*.rpt

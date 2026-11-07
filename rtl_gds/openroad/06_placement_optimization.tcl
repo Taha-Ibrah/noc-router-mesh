@@ -1,3 +1,13 @@
+# === REPAIR/REROUTE PURPOSE HEADER ============================================
+# PURPOSE: REPAIR EARLY ELECTRICAL PROBLEMS IN THE GLOBALLY PLACED DESIGN.
+# GOAL: REDUCE SLEW, CAPACITANCE, FANOUT, AND LONG-WIRE ISSUES BEFORE DETAILED PLACEMENT
+#       AND CLOCK-TREE SYNTHESIS.
+# HOW IT WORKS: ESTIMATE WIRE RESISTANCE/CAPACITANCE FROM PLACEMENT, INSERT BUFFERS AND
+#               RESIZE CELLS WITH ELECTRICAL REPAIR, REFRESH PLACEMENT ESTIMATES, AND
+#               SAVE THE OPTIMIZED CHECKPOINT. TIMING RESULTS ARE ESTIMATES AT THIS
+#               STAGE.
+# ============================================================================
+
 # Locate the project and SKY130 library.
 set PROJECT_DIR [file normalize [file join [file dirname [info script]] ..]]
 set CELL_DIR /Users/taha.ibrah/.ciel/sky130A/libs.ref/sky130_fd_sc_hd

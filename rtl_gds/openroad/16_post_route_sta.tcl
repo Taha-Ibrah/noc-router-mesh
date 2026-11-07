@@ -1,3 +1,14 @@
+# === REPAIR/REROUTE PURPOSE HEADER ============================================
+# PURPOSE: ANALYZE EXTRACTED TIMING AND ELECTRICAL LIMITS AFTER THE PASS 2 ANTENNA
+#          REROUTE.
+# GOAL: IDENTIFY SETUP, HOLD, SLEW, CAPACITANCE, AND TIMING-COVERAGE PROBLEMS THAT NEED
+#       FURTHER REPAIR.
+# HOW IT WORKS: EXTRACT NOMINAL WIRE RC FROM THE ROUTED PASS 2 CHECKPOINT WITH OPENRCX,
+#               SAVE/LOAD SPEF, AND ANALYZE AT TT, 25 C, 1.8 V. WRITE COVERAGE,
+#               ANNOTATION, TIMING, AND ELECTRICAL REPORTS. THIS STAGE MEASURES
+#               PROBLEMS; IT DOES NOT CHANGE PLACEMENT, CELLS, OR ROUTING.
+# ============================================================================
+
 # Locate the project, PDK, and latest routed checkpoint.
 set PROJECT_DIR [file normalize [file join [file dirname [info script]] ..]]
 set PDK_DIR /Users/taha.ibrah/.ciel/sky130A

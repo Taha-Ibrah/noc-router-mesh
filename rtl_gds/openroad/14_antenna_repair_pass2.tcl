@@ -1,3 +1,12 @@
+# === REPAIR/REROUTE PURPOSE HEADER ============================================
+# PURPOSE: INSERT ADDITIONAL ANTENNA-PROTECTION DIODES AFTER THE FIRST REPAIR PASS.
+# GOAL: REDUCE RESIDUAL ANTENNA RISK USING A 10% EXTRA ANTENNA-RATIO MARGIN.
+# HOW IT WORKS: LOAD THE FIRST ANTENNA-REPAIR RESULT, RUN ONE SKY130 HD DIODE_2
+#               INSERTION PASS WITH THE 10% MARGIN, CHECK PLACEMENT, AND SAVE THE
+#               MODIFIED CELLS, NETLIST, CONSTRAINTS, AND GUIDES. STAGE 15 PERFORMS THE
+#               DETAILED REROUTE FOR THESE ADDITIONS.
+# ============================================================================
+
 # Locate the project and library.
 set PROJECT_DIR [file normalize [file join [file dirname [info script]] ..]]
 set CELL_DIR /Users/taha.ibrah/.ciel/sky130A/libs.ref/sky130_fd_sc_hd

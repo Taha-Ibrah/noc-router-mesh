@@ -42,7 +42,7 @@ An `.odb`, `.def`, or `.gds` filename does not prove that the design passes veri
 |---|---|---|
 | `.log` | Tool execution transcript: commands/messages, warnings, errors, progress, runtime, and printed metrics. | Check whether a stage completed and diagnose failures. For example, `reports/antenna_reroute_pass2.log` records the second antenna rerouting run. |
 | `.rpt` | A focused report whose contents depend on the generating command. | Inspect timing paths, slew/capacitance failures, routing DRC, or antenna ratios. Examples include `post_cts_hold.rpt` and `antenna_pass2_antenna.rpt`. |
-| `.rpt-<N>.rpt` | This project's filename pattern for an intermediate router DRC report from iteration N. | Locate the nets, layers, and coordinates of violations during routing. Old reports can contain violations that the final run fixed. |
+| `.rpt-<N>.rpt` | This project's filename pattern for an intermediate router DRC report from iteration N. | Optional debugging snapshots, removed during report cleanup and ignored by Git on future runs. Stage logs retain iteration history; final DRC reports retain the completed result. |
 | `.xml` | Structured test results; the project's `results.xml` files summarize simulation test cases and failures. | Review or automatically process Cocotb test outcomes. These are simulation results, not physical-layout verification reports. |
 | `.json` | Tool-specific structured configuration or results. | Store machine-readable metrics or settings when a tool generates or consumes JSON. The detailed-placement script requests a JSON report, but that report was not generated in its recorded run. |
 | `.vcd` / `.fst` | Signal waveform traces from simulation. | Inspect flits, FIFO state, and control signals in GTKWave when waveform dumping is enabled. These are optional outputs and are not currently present in the scanned project. |
@@ -50,6 +50,8 @@ An `.odb`, `.def`, or `.gds` filename does not prove that the design passes veri
 | `.png` | Raster image. | Store diagrams or exported layout screenshots, such as `docs/images/mesh_diagram.png`. |
 
 In the completed detailed-routing runs, an empty final DRC `.rpt` accompanies a reported zero router-violation count. Confirm completion in the `.log`; an empty file alone is not proof of a successful run.
+
+See the [report retention notes](../rtl_gds/reports/README.md) for the retained evidence and cleanup scope.
 
 ## PDK and Application Files
 

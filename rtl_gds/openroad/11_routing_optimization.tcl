@@ -1,3 +1,13 @@
+# === REPAIR/REROUTE PURPOSE HEADER ============================================
+# PURPOSE: REPAIR ELECTRICAL AND TIMING PROBLEMS USING GLOBAL-ROUTING ESTIMATES.
+# GOAL: CREATE 5% SLEW/CAPACITANCE MARGIN AND TARGET 0.05 NS HOLD MARGIN BEFORE DETAILED
+#       ROUTING.
+# HOW IT WORKS: TEMPORARILY INCLUDE RESET LOADS IN ELECTRICAL REPAIR, BUFFER/RESIZE
+#               CELLS, RESTORE FUNCTIONAL RESET TIMING, REPAIR SETUP/HOLD, LEGALIZE
+#               PLACEMENT WITH INCREMENTAL ROUTING UPDATES, AND REGENERATE GUIDES AND
+#               ESTIMATED RC. SAVE THE ROUTE-OPTIMIZED CHECKPOINT.
+# ============================================================================
+
 # Locate the project and SKY130 library.
 set PROJECT_DIR [file normalize [file join [file dirname [info script]] ..]]
 set CELL_DIR /Users/taha.ibrah/.ciel/sky130A/libs.ref/sky130_fd_sc_hd

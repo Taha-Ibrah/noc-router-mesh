@@ -1,3 +1,13 @@
+# === REPAIR/REROUTE PURPOSE HEADER ============================================
+# PURPOSE: ROUTE THE DIODE ADDITIONS PRODUCED BY THE SECOND ANTENNA-REPAIR PASS.
+# GOAL: CONNECT STAGE 14 CHANGES AND RESOLVE ROUTING GEOMETRY CONFLICTS BEFORE CHECKING
+#       ANTENNA VIOLATIONS AGAIN.
+# HOW IT WORKS: LOAD THE PASS 2 DATABASE AND UPDATED GUIDES, VERIFY PLACEMENT, AND RUN
+#               DETAILED ROUTING. SAVE THE ROUTED PASS 2 CHECKPOINT AND REPORT
+#               SIGNAL-ROUTING COMPLETION, ROUTER GEOMETRY VIOLATIONS, AND THE REMAINING
+#               ANTENNA FAILURES.
+# ============================================================================
+
 # Locate the project and library.
 set PROJECT_DIR [file normalize [file join [file dirname [info script]] ..]]
 set CELL_DIR /Users/taha.ibrah/.ciel/sky130A/libs.ref/sky130_fd_sc_hd

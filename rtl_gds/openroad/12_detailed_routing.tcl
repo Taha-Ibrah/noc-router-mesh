@@ -1,3 +1,14 @@
+# === REPAIR/REROUTE PURPOSE HEADER ============================================
+# PURPOSE: CONVERT THE OPTIMIZED GLOBAL-ROUTING PLAN INTO DETAILED WIRE AND VIA
+#          GEOMETRY.
+# GOAL: COMPLETE SIGNAL ROUTING, RESOLVE ROUTER GEOMETRY VIOLATIONS, AND IDENTIFY
+#       REMAINING ANTENNA PROBLEMS.
+# HOW IT WORKS: LOAD THE ROUTE-OPTIMIZED DATABASE AND GUIDES, REMOVE THE UNUSED CONSTANT
+#               NET ONLY WHEN IT HAS NO CONNECTIONS, AND RUN DETAILED ROUTING WITH FOUR
+#               THREADS. SAVE THE ROUTED DESIGN AND REPORT ROUTING COMPLETION, GEOMETRY,
+#               AND ANTENNA RESULTS.
+# ============================================================================
+
 # Locate the project and SKY130 library.
 set PROJECT_DIR [file normalize [file join [file dirname [info script]] ..]]
 set CELL_DIR /Users/taha.ibrah/.ciel/sky130A/libs.ref/sky130_fd_sc_hd

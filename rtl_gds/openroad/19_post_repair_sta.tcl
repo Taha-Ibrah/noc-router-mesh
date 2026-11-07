@@ -1,3 +1,13 @@
+# === REPAIR/REROUTE PURPOSE HEADER ============================================
+# PURPOSE: VERIFY THE ELECTRICAL CUSHION DESIGN AFTER ITS COMPLETE REROUTE.
+# GOAL: DETERMINE WHETHER THE ELECTRICAL REPAIRS STILL MEET SETUP, HOLD, SLEW, AND
+#       CAPACITANCE LIMITS WITH ACTUAL ROUTED WIRE PARASITICS.
+# HOW IT WORKS: LOAD THE CUSHION-ROUTED CHECKPOINT, EXTRACT FRESH NOMINAL RC WITH
+#               OPENRCX, SAVE/LOAD THE MATCHING SPEF, AND REPORT COVERAGE AND
+#               TIMING/ELECTRICAL RESULTS AT TT, 25 C, 1.8 V. THIS IS VERIFICATION ONLY;
+#               IT DOES NOT INSERT CELLS OR REROUTE WIRES.
+# ============================================================================
+
 # Locate the project, PDK, and latest cushion-routed checkpoint.
 set PROJECT_DIR [file normalize [file join [file dirname [info script]] ..]]
 set PDK_DIR /Users/taha.ibrah/.ciel/sky130A

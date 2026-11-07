@@ -502,5 +502,5 @@ Paths are relative to `rtl_gds/`.
 | `build/openroad/noc_mesh_antenna_repair.sdc` | Generated routed antenna-repair SDC |
 | `reports/antenna_repair.log` | Diode-insertion and rerouting log |
 | `reports/antenna_repair_drc.rpt` | Final router DRC report; empty (0 violations) |
-| `reports/antenna_repair_drc.rpt-*.rpt` | Historical DRC reports from routing iterations |
+| `reports/README.md` | Report retention notes; optional per-iteration DRC snapshots were removed, while the full routing log and final DRC report were retained |
 | `reports/antenna_repair_antenna.rpt` | Latest remaining antenna violations |

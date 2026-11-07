@@ -1,3 +1,13 @@
+# === REPAIR/REROUTE PURPOSE HEADER ============================================
+# PURPOSE: REPAIR ELECTRICAL AND TIMING PROBLEMS AFTER THE PHYSICAL CLOCK TREE IS BUILT.
+# GOAL: REDUCE SETUP/HOLD AND ELECTRICAL VIOLATIONS USING PROPAGATED CLOCKS, WITH A 0.05
+#       NS HOLD-MARGIN TARGET.
+# HOW IT WORKS: ESTIMATE PLACEMENT RC, BUFFER/RESIZE FOR ELECTRICAL LIMITS, REPAIR SETUP
+#               AND HOLD, LEGALIZE CHANGED CELLS, CHECK PLACEMENT AND POWER-GRID
+#               CONNECTIVITY, AND SAVE THE POST-CTS CHECKPOINT. TIMING REMAINS
+#               PLACEMENT-ESTIMATED.
+# ============================================================================
+
 # Locate the project and SKY130 library.
 set PROJECT_DIR [file normalize [file join [file dirname [info script]] ..]]
 set CELL_DIR /Users/taha.ibrah/.ciel/sky130A/libs.ref/sky130_fd_sc_hd

@@ -2,7 +2,7 @@ Architecture during ASIC (RTL-GDSII) Flow.
 
 **Statistics can be viewed in .log files.**
 
-Common Terminology:
+**Common Terminology:**
 
 _Process Design Kit (PDK)_ - Complete collection of files provided by semiconductor foundry.
     - Timing/Power (.lib): Gate delays, power arcs, pin directions for synthesis and STA
@@ -77,42 +77,51 @@ _Why is Capacitance so important in ASIC?_ - Capacitance matters because every s
 
 
 
+
+
+
+
+
+
+
+
+
 **1: UNMAPPED Yosys (GENERIC Gate-level synthesis)**
-- Open-source framework for RTL Logic Synthesis
-- Converts HDL to a gate-level netlist
-- In unmapped synthesis, hdl is evaluated independently from any technology. Evaluates through generic logic gates and represnts in generic logic representations.
+    - Open-source framework for RTL Logic Synthesis
+    - Converts HDL to a gate-level netlist
+    - In unmapped synthesis, hdl is evaluated independently from any technology. Evaluates through generic logic gates and represnts in generic logic representations.
 ***Issue:***
-- The original RTL used unpacked arrays of flit structs as module ports. Yosys frontend had limited support for SystemVerilog constructs.
-- Created a "Flattened" RTL version, consisting of one long row of bits.
-- This change addressed how the hardware was expressed - not the intended NoC behavior. "Flattening" means to simplify the data interface, rather than merging the entire module hierarchy.
+    - The original RTL used unpacked arrays of flit structs as module ports. Yosys frontend had limited support for SystemVerilog constructs.
+    - Created a "Flattened" RTL version, consisting of one long row of bits.
+    - This change addressed how the hardware was expressed - not the intended NoC behavior. "Flattening" means to simplify the data interface, rather than merging the entire module hierarchy.
 
 **2: MAPPED SYNTHESIS (Using Yosys)**
-- To continue with mapped synthesis, 2 items are needed
-    - Unmapped netlist
-    - Target Technology Library (.lib file): Catalog of physical gates available in target ASIC process or FPGA family. In this case, using SKYWater Technology Open-Source 130-nm cells.
-- Produced technology-mapped netlist. Replaced generic logic with exact physical standard cells available in (.lib) file.
+    - To continue with mapped synthesis, 2 items are needed
+        - Unmapped netlist
+        - Target Technology Library (.lib file): Catalog of physical gates available in target ASIC process or FPGA family. In this case, using SKYWater Technology Open-Source 130-nm cells.
+    - Produced technology-mapped netlist. Replaced generic logic with exact physical standard cells available in (.lib) file.
 
 **3: OpenSTA (Static Timing Analysis)**
-- After synthesis, move onto static timing analysis.
-- Inputs required:
-    - Complete timing constraint file (.sdc)
-    - Gate-level Netlist (.v): Structural Verilog from synthesis
-    - Target timing library from .lib: Gate delays and pin requirements from foundry PDK
-- Calculates whether every register-to-register path in MAPPED netlist meets speed requirements set by the timing constraints (.sdc file).
+    - After synthesis, move onto static timing analysis.
+    - Inputs required:
+        - Complete timing constraint file (.sdc)
+        - Gate-level Netlist (.v): Structural Verilog from synthesis
+        - Target timing library from .lib: Gate delays and pin requirements from foundry PDK
+    - Calculates whether every register-to-register path in MAPPED netlist meets speed requirements set by the timing constraints (.sdc file).
     Key components of the .sdc file:
         - _Input Delay:_
         - _Output Delay:_
         - _Hold Uncertainty:_
         - _Clock Transition:_
         - _Output Load:_
-- Checks for setup and hold violations.
-    - Setup Violation: data arrives too late for clk edge
-    - Hold Violation: data changes too quickly
-- Important Outputs:
-    - __Worst Negative Slack (WNS):__ Single worst timing violation in the entire chip. (-)ve slack means that chip will not work reliably at target clock speeds (data arrived late).
-    - __Total Negative Slack (TNS):__ Sum of all negative slacks. Tells how widespread timing problems are in the entire chip.
-    - __Slew Violations:__ A signal transition time (how fast voltage rises/falls) that exceeds maximum allowed limit. The signal is changing too slowly, risking logic errors, noise, power loss.
-    - __Capacitive Violations:__ Total load capacitance (pin capacitance of receiver gates plus wire routing capacitance) attached to an output in that exceeds driver's maximum allowed limit. This means driver cell is overloaded.
+    - Checks for setup and hold violations.
+        - Setup Violation: data arrives too late for clk edge
+        - Hold Violation: data changes too quickly
+    - Important Outputs:
+        - __Worst Negative Slack (WNS):__ Single worst timing violation in the entire chip. (-)ve slack means that chip will not work reliably at target clock speeds (data arrived late).
+        - __Total Negative Slack (TNS):__ Sum of all negative slacks. Tells how widespread timing problems are in the entire chip.
+        - __Slew Violations:__ A signal transition time (how fast voltage rises/falls) that exceeds maximum allowed limit. The signal is changing too slowly, risking logic errors, noise, power loss.
+        - __Capacitive Violations:__ Total load capacitance (pin capacitance of receiver gates plus wire routing capacitance) attached to an output in that exceeds driver's maximum allowed limit. This means driver cell is overloaded.
 
 **4: Floorplanning (OpenROAD):** First step of PHYSICAL DESIGN. Define chip's core area, shape, place large macros (IP blocks), build power distribution network, and reserve space for I/O pins before standard cell placement.
     - Die & Core Sizing: Setting total chip dimension and usable area for standard cells.
@@ -174,15 +183,26 @@ _Why is Capacitance so important in ASIC?_ - Capacitance matters because every s
 **16: Antenna Check:** Subsection of Detailed routing. Serves as an OPTIONAL repair loop when violations are found. After this is done, reroute and recheck the physical design to ensure there are no violations found within.
     - Several passes may be done in order to fix violating nets / failing pins.
 
-**16: Finishing:** Adds the physical structure needed to complete the layout.
+**17: Repairs and Reroute:** Repairs timing and electrical violations, then updates the physical wiring for the changed design.
+    - Resize drivers and insert buffers to address slew and capacitance violations.
+    - Preserve existing hold-delay cells and add delay where needed to repair hold timing while maintaining setup timing.
+    - Legalize changed cells, update routing guides, and rerun detailed routing to connect added cells and repair routing geometry violations.
+    - Fix any antenna violations with diode insertion.
+
+**18: Violation Verification Extraction:** Extracts resistance and capacitance from the repaired, rerouted design to verify whether the repairs worked.
+    - Generate a fresh .SPEF file and run STA with the matching netlist, timing library, and SDC constraints.
+    - Recheck setup, hold, slew, capacitance, routing connectivity, router geometry, and antenna violations using the appropriate tools/reports.
+    - Repeat repairs, rerouting, and verification if violations remain. This closure check comes before finishing; final extraction follows finishing changes that affect parasitics.
+
+**19: Finishing:** Adds the physical structure needed to complete the layout.
     - Filler cells: Occupy gaps between standard cells and maintain continuity of power rails and well structures along rows.
     - Metal fill: Adds extra metal shapes in sparse areas to meet manufacturing density requirement.
 
-**17: Parasitic Extraction:** Calculates the resistance and capacitance of the routed connections. Results are stored in .SPEF file, and OpenSTA combines information with final netlist, cell timing libraries, and SDC constraints to check timing again.
+**20: Parasitic Extraction:** Calculates the resistance and capacitance of the routed connections. Results are stored in .SPEF file, and OpenSTA combines information with final netlist, cell timing libraries, and SDC constraints to check timing again.
     - Demonstrates how actual wiring effects setup/hold slack, signal transition, and capacitive loads.
     - If violations remain, need further work.
 
-**18: Final Checks and Export:**
+**21: Final Checks and Export:**
 
 | **Final STA** | Setup and hold timing pass using extracted wire resistance/capacitance at the required operating corners |
 | **Electrical checks** | Slew and capacitance stay within applicable limits |

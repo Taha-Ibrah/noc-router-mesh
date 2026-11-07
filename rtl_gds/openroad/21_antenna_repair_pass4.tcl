@@ -1,3 +1,13 @@
+# === REPAIR/REROUTE PURPOSE HEADER ============================================
+# PURPOSE: CONTINUE ANTENNA REPAIR FROM THE COMPLETED PASS 3 ROUTED CHECKPOINT.
+# GOAL: REDUCE THE REMAINING ANTENNA FAILURES WHILE PRESERVING ROUTED TIMING AND
+#       ELECTRICAL CLOSURE.
+# HOW IT WORKS: USE PASS 3 REPORTS AS THE BASELINE AND RUN ONE DIODE_2 REPAIR PASS WITH
+#               A 10% RATIO MARGIN. SAVE A RESTART CHECKPOINT, STOP IF NO DIODES WERE
+#               ADDED, THEN REROUTE AND EXTRACT FRESH RC. CHECK FINAL ANTENNA, GEOMETRY,
+#               TIMING, AND ELECTRICAL RESULTS; REPORT REMAINING FAILURES.
+# ============================================================================
+
 # ANTENNA REPAIR PASS 4
 # Continue from pass 3, attempt one additional diode pass, reroute, and verify
 # the routed result with fresh extraction. Use pass 3 reports for starting metrics.

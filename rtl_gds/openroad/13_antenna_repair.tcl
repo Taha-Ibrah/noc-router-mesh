@@ -1,3 +1,13 @@
+# === REPAIR/REROUTE PURPOSE HEADER ============================================
+# PURPOSE: PERFORM THE FIRST ANTENNA-REPAIR PASS ON THE INITIAL DETAILED-ROUTED DESIGN.
+# GOAL: REDUCE ANTENNA VIOLATIONS BY ADDING PROTECTION NEAR VULNERABLE TRANSISTOR GATES
+#       AND RECONNECTING THOSE ADDITIONS.
+# HOW IT WORKS: INSERT SKY130 HD DIODE_2 CELLS IN ONE REPAIR ITERATION WITH THE DEFAULT
+#               ZERO EXTRA RATIO MARGIN. SAVE THE REPAIRED PLACEMENT/GUIDES, RUN
+#               DETAILED ROUTING AGAIN, AND REPORT FINAL ANTENNA AND ROUTER GEOMETRY
+#               VIOLATIONS.
+# ============================================================================
+
 # Locate the project and SKY130 library.
 set PROJECT_DIR [file normalize [file join [file dirname [info script]] ..]]
 set CELL_DIR /Users/taha.ibrah/.ciel/sky130A/libs.ref/sky130_fd_sc_hd

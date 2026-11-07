@@ -1,3 +1,13 @@
+# === REPAIR/REROUTE PURPOSE HEADER ============================================
+# PURPOSE: REPAIR ANTENNA VIOLATIONS IN THE ELECTRICALLY IMPROVED CUSHION-ROUTED DESIGN.
+# GOAL: REDUCE ANTENNA FAILURES AFTER ELECTRICAL REPAIR/REROUTING WHILE PRESERVING
+#       PASSING TIMING AND ELECTRICAL LIMITS.
+# HOW IT WORKS: RECORD BASELINE ANTENNA RESULTS, INSERT SKY130 HD DIODE_2 CELLS IN ONE
+#               PASS WITH A 10% RATIO MARGIN, SAVE A RESTART CHECKPOINT, AND REROUTE.
+#               CHECK ANTENNA/GEOMETRY, EXTRACT FRESH RC, RUN STA, AND FLAG INCOMPLETE
+#               CLOSURE WHILE RETAINING SAVED RESULTS.
+# ============================================================================
+
 # Locate the project, SKY130 library, and electrically repaired input.
 set PROJECT_DIR [file normalize [file join [file dirname [info script]] ..]]
 set PDK_DIR /Users/taha.ibrah/.ciel/sky130A
