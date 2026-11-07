@@ -2,10 +2,10 @@
 set PROJECT_DIR [file normalize [file join [file dirname [info script]] ..]]
 set CELL_DIR /Users/taha.ibrah/.ciel/sky130A/libs.ref/sky130_fd_sc_hd
 
-set INPUT $PROJECT_DIR/build/openroad/noc_mesh_antenna_pass2_routed
-set SPEF $PROJECT_DIR/build/openroad/noc_mesh_post_route.spef
-set OUTPUT $PROJECT_DIR/build/openroad/noc_mesh_electrical_repair_before_reroute
-set REPORT $PROJECT_DIR/reports/electrical_repair
+set INPUT $PROJECT_DIR/build/openroad/noc_mesh_electrical_repair_routed
+set SPEF $PROJECT_DIR/build/openroad/noc_mesh_electrical_repair_routed.spef
+set OUTPUT $PROJECT_DIR/build/openroad/noc_mesh_electrical_cushion_before_reroute
+set REPORT $PROJECT_DIR/reports/electrical_cushion
 
 file mkdir $PROJECT_DIR/reports
 
@@ -38,23 +38,46 @@ puts "Capacitance violations: [sta::max_capacitance_violation_count]"
 unset_case_analysis [get_ports rst_n]
 
 
-# Preserve the cells previously inserted to satisfy hold timing.
-set_dont_touch [get_cells {hold*}]
+# Allow buffering at existing hold-cell inputs. The inherited instance locks
+# otherwise prevent insertion (ODB-1211 / RSZ-3006). Hold timing is repaired below.
+set HOLD_CELLS [get_cells {hold*}]
+if {[llength $HOLD_CELLS] > 0} {
+    unset_dont_touch $HOLD_CELLS
+}
+puts "Existing hold cells unlocked for repair: [llength $HOLD_CELLS]"
 
 # Keep specialized probe cells excluded, as in synthesis.
 set_dont_use [get_lib_cells {*/sky130_fd_sc_hd__probe*}]
 
-# Insert buffers and resize drivers.
-# Target 5% electrical margin; limit utilization to 50%.
-repair_design -slew_margin 5 -cap_margin 5 \
-    -max_utilization 50
+# Aggressive experimental targets: 60% margin means 40% of each legal limit.
+# This encourages buffering/sizing; it does not force a buffer-count multiplier.
+set SLEW_MARGIN_PERCENT 60
+set CAP_MARGIN_PERCENT 60
+set INSTANCES_BEFORE [llength [[ord::get_db_block] getInsts]]
+
+puts "\nELECTRICAL REPAIR MARGINS: slew=$SLEW_MARGIN_PERCENT%, cap=$CAP_MARGIN_PERCENT%"
+repair_design -slew_margin $SLEW_MARGIN_PERCENT \
+    -cap_margin $CAP_MARGIN_PERCENT -max_utilization 50
+
+set ELECTRICAL_CELLS_ADDED [expr {
+    [llength [[ord::get_db_block] getInsts]] - $INSTANCES_BEFORE
+}]
+puts "Additional instances from electrical repair: $ELECTRICAL_CELLS_ADDED"
+puts "Previous 5% electrical pass added 32 buffers; this count is measured, not forced."
 
 # Restore functional timing and legalize electrical repairs.
 set_case_analysis 1 [get_ports rst_n]
 detailed_placement
 estimate_parasitics -placement
 
-# Add delay where data arrives too early.
+# Repair setup first if the new estimates show an actual setup failure.
+if {[sta::worst_slack_cmd max] < 0.0} {
+    repair_timing -setup -max_utilization 50
+    detailed_placement
+    estimate_parasitics -placement
+}
+
+# Cell resizing may remove intentional delay. Explicitly close hold afterward.
 # Target 0.10 ns of hold margin while preserving setup timing.
 repair_timing -hold -hold_margin 0.10 -max_utilization 50
 
@@ -98,23 +121,39 @@ report_tns -min
 puts "\nSlew violations: [sta::max_slew_violation_count]"
 puts "Capacitance violations: [sta::max_capacitance_violation_count]"
 
-puts "\nSaved: ${OUTPUT}.odb"
-puts "Next: reroute this checkpoint and extract fresh parasitics."
+puts "\nSaved candidate: ${OUTPUT}.odb"
 
-# Changes that fixed the electrical and hold-timing failures
-# - repair_design resizes drivers and inserts buffers to reduce excessive
-#   loading and slow transitions. The electrical targets include 5% margin.
-# - set_dont_touch on hold* preserves existing hold-delay cells. Without this,
-#   electrical repair replaced nine delay cells with faster buffers, removing
-#   intentional delay and contributing to hold failures.
-# - set_dont_use excludes specialized probe cells from repair-cell selection,
-#   consistent with the synthesis exclusions.
-# - repair_timing -hold adds delay to paths whose data arrives too early.
-#   The 0.10 ns margin is a repair target; it does not relax the SDC requirements.
-#   The latest run inserted 63 hold buffers to reach that target.
-# - detailed_placement legalizes the added cells; estimate_parasitics refreshes
-#   the timing model after placement changes. All checks are reported again.
-# Latest placement-estimated results: setup +7.97 ns, hold +0.10 ns,
-# setup/hold TNS 0.00 ns, slew violations 0, capacitance violations 0.
-# These are preliminary results. Rerouting and fresh RC extraction must confirm
-# timing/electrical closure; antenna and physical verification remain separate.
+# A saved candidate is not automatically a passing repair. Stop on failures
+# under the current estimate, while keeping the checkpoint/reports for diagnosis.
+set PREVIEW_SETUP [sta::worst_slack_cmd max]
+set PREVIEW_HOLD [sta::worst_slack_cmd min]
+set PREVIEW_SLEW [sta::max_slew_violation_count]
+set PREVIEW_CAP [sta::max_capacitance_violation_count]
+
+if {$PREVIEW_SETUP < 0.0 || $PREVIEW_HOLD < 0.0 ||
+    $PREVIEW_SLEW > 0 || $PREVIEW_CAP > 0} {
+    error "Repair candidate still fails placement-estimated checks. Inspect electrical_cushion reports before rerouting."
+}
+
+puts "Placement-estimated checks pass; routed closure is not yet established."
+puts "Next: retarget rerouting and extraction to this cushion candidate."
+
+# Aggressive buffering experiment
+# - Start from the latest routed checkpoint and its matching extracted SPEF,
+#   which reported 198 slew and 55 capacitance violations in stage 19.
+# - Increase electrical repair margins from 5% to 60%. The repair targets
+#   become 40% of the applicable limits; actual buffer count is not prescribed.
+# - Unlock inherited hold* instance locks so their inputs can be rebuffered.
+#   Cell replacements are allowed; explicit hold repair restores required delay.
+# - Keep specialized probe cells excluded.
+# - Keep explicit hold repair with a 0.10 ns target and 50% utilization ceiling.
+# - More buffering can increase area, power, routing congestion, and antenna
+#   exposure; changed loads can also require additional hold repair.
+# - Save to the separate electrical_cushion checkpoint/report names so the
+#   previous routed result and reports remain available for comparison.
+# - Stage 18 must be retargeted to this new checkpoint, with separate routed
+#   output names. The following STA run must use that matching routed result.
+# - Fail the script on negative estimated setup/hold slack or remaining
+#   slew/capacitance failures; retain the candidate as a diagnostic checkpoint.
+# - Final printed checks use placement estimates, not fresh routed extraction.
+#   Measure the routed result before claiming electrical or timing closure.

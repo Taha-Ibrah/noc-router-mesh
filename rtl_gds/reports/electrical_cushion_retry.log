@@ -1,0 +1,128 @@
+OpenROAD bazel-nostamp 
+Features included (+) or not (-): -GPU +GUI -Python
+This program is licensed under the BSD-3 license. See the LICENSE file for details.
+Components of this program may be licensed under more restrictive licenses which must be honored.
+[INFO ORD-0030] Using 4 thread(s).
+
+BEFORE REPAIR — EXTRACTED PARASITICS
+Slew violations: 198
+Capacitance violations: 55
+Existing hold cells unlocked for repair: 3063
+
+ELECTRICAL REPAIR MARGINS: slew=60%, cap=60%
+Iteration |   Area    | Resized | Buffers | Nets repaired | Remaining
+---------------------------------------------------------------------
+        0 |     +0.0% |       0 |       0 |             0 |     65620
+    final |     +4.2% |    4491 |    1175 |           992 |         0
+---------------------------------------------------------------------
+[INFO RSZ-0034] Found 5057 slew violations.
+[INFO RSZ-0036] Found 595 capacitance violations.
+[INFO RSZ-0039] Resized 4491 instances.
+[INFO RSZ-0038] Inserted 1175 buffers in 992 nets.
+[INFO RSZ-0504] Runtime: 7.43s
+Additional instances from electrical repair: 1175
+Previous 5% electrical pass added 32 buffers; this count is measured, not forced.
+[INFO DPL-0006] Core area: 2113997.49 um^2
+[INFO DPL-0007] Movable instances area: 929455.17 um^2
+[INFO DPL-0008] Fixed instances area within core: 39217.61 um^2
+[INFO DPL-0009] Utilization: 45.8%
+[INFO DPL-0005] Diamond search max displacement: +/- 500 sites horizontally, +/- 100 rows vertically.
+[INFO DPL-1102] Legalizing using negotiation legalizer.
+[INFO DPL-1103] Negotiation base search window: +/-20 sites horizontally, +/-5 rows vertically 
+	Automatic search window extension enabled.
+	Search window extendable up to the max displacement cap of +/-500 sites, +/-100 rows near walls.
+[INFO DPL-1104] NegotiationLegalizer DRC penalty: 5.
+[INFO DPL-0392] Negotiation cell height distribution (1 unique row-count(s)):
+[INFO DPL-0393]   height 1 row(s): 97733 cells
+          |      Total |  Illegal |  Illegal
+Iteration | Violations |    Cells |    Sites
+---------------------------------------------
+        0 |       1313 |       256 |      1057
+        1 |        589 |        77 |       512
+        2 |        499 |        55 |       444
+        3 |        414 |        36 |       378
+        4 |        259 |        27 |       232
+        5 |        267 |        29 |       238
+        6 |        220 |        18 |       202
+        7 |        161 |        17 |       144
+        8 |        123 |        17 |       106
+        9 |         77 |         9 |        68
+       10 |         56 |         4 |        52
+       17 |          0 |         0 |         0
+Negotiation phase 1 converged at iteration 17.
+[INFO DPL-0500] Runtime: 1.84s
+Placement Analysis
+---------------------------------
+total displacement      16024.9 u
+average displacement        0.2 u
+max displacement           34.0 u
+original HPWL         4315571.1 u
+legalized HPWL        4325642.7 u
+delta HPWL                    0 %
+
+[INFO RSZ-0046] Found 1554 endpoints with hold violations.
+Iteration | Resized | Buffers | Cloned Gates |   Area   |   WNS   |   TNS   | Endpoint
+--------------------------------------------------------------------------------------
+        0 |       0 |       0 |            0 |    +0.0% |  -0.922 | -437.975 | _83330_/D
+    final |       0 |     262 |            0 |    +0.3% |   0.101 |   0.000 | _81931_/D
+--------------------------------------------------------------------------------------
+[INFO RSZ-0032] Inserted 262 hold buffers.
+[INFO RSZ-0506] Runtime: 1.34s
+[INFO DPL-0006] Core area: 2113997.49 um^2
+[INFO DPL-0007] Movable instances area: 932077.69 um^2
+[INFO DPL-0008] Fixed instances area within core: 39217.61 um^2
+[INFO DPL-0009] Utilization: 45.9%
+[INFO DPL-0005] Diamond search max displacement: +/- 500 sites horizontally, +/- 100 rows vertically.
+[INFO DPL-1102] Legalizing using negotiation legalizer.
+[INFO DPL-1103] Negotiation base search window: +/-20 sites horizontally, +/-5 rows vertically 
+	Automatic search window extension enabled.
+	Search window extendable up to the max displacement cap of +/-500 sites, +/-100 rows near walls.
+[INFO DPL-1104] NegotiationLegalizer DRC penalty: 5.
+[INFO DPL-0392] Negotiation cell height distribution (1 unique row-count(s)):
+[INFO DPL-0393]   height 1 row(s): 97995 cells
+          |      Total |  Illegal |  Illegal
+Iteration | Violations |    Cells |    Sites
+---------------------------------------------
+        0 |        578 |        86 |       489
+        1 |        389 |        55 |       334
+        2 |        441 |        55 |       377
+        3 |        290 |        46 |       244
+        4 |        290 |        41 |       249
+        5 |        312 |        43 |       269
+        6 |        288 |        37 |       251
+        7 |        281 |        32 |       249
+        8 |        177 |        25 |       152
+        9 |         81 |        14 |        67
+       10 |         35 |         5 |        30
+       20 |         26 |         5 |        21
+       30 |         21 |         4 |        17
+       32 |          0 |         0 |         0
+Negotiation phase 1 converged at iteration 32.
+[INFO DPL-0500] Runtime: 1.45s
+Placement Analysis
+---------------------------------
+total displacement       2498.1 u
+average displacement        0.0 u
+max displacement           59.8 u
+original HPWL         4355372.2 u
+legalized HPWL        4356376.0 u
+delta HPWL                    0 %
+
+
+AFTER REPAIR — PLACEMENT ESTIMATES ONLY
+Design area 967286 um^2 46% utilization.
+
+Setup:
+worst slack max 9.42
+tns max 0.00
+
+Hold:
+worst slack min 0.10
+tns min 0.00
+
+Slew violations: 0
+Capacitance violations: 0
+
+Saved candidate: /Users/taha.ibrah/Downloads/noc-router-mesh/rtl_gds/build/openroad/noc_mesh_electrical_cushion_before_reroute.odb
+Placement-estimated checks pass; routed closure is not yet established.
+Next: retarget rerouting and extraction to this cushion candidate.
