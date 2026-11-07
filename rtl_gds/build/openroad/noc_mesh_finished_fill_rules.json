@@ -1,0 +1,21 @@
+{"layers": {
+        "met1": {"name": "met1", "space_to_outline": 0,
+            "non-opc": {"datatype": [0], "width": [2.0,1.0,0.58,0.3], "height": [2.0,1.0,0.58,0.3],
+                "space_to_fill": 0.3, "space_to_non_fill": 3.0}}
+    ,
+        "met2": {"name": "met2", "space_to_outline": 0,
+            "non-opc": {"datatype": [0], "width": [2.0,1.0,0.58,0.3], "height": [2.0,1.0,0.58,0.3],
+                "space_to_fill": 0.3, "space_to_non_fill": 3.0}}
+    ,
+        "met3": {"name": "met3", "space_to_outline": 0,
+            "non-opc": {"datatype": [0], "width": [2.0,1.0,0.58], "height": [2.0,1.0,0.58],
+                "space_to_fill": 0.3, "space_to_non_fill": 3.0}}
+    ,
+        "met4": {"name": "met4", "space_to_outline": 0,
+            "non-opc": {"datatype": [0], "width": [2.0,1.0,0.58], "height": [2.0,1.0,0.58],
+                "space_to_fill": 0.3, "space_to_non_fill": 3.0}}
+    ,
+        "met5": {"name": "met5", "space_to_outline": 0,
+            "non-opc": {"datatype": [0], "width": [3.0], "height": [3.0],
+                "space_to_fill": 1.6, "space_to_non_fill": 3.0}}
+    }}

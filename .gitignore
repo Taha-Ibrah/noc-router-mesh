@@ -5,3 +5,7 @@
 
 # Optional per-iteration router DRC snapshots; retain final reports and logs.
 /rtl_gds/reports/*_drc.rpt-[0-9]*.rpt
+
+# Generated physical layouts; retain locally and regenerate from flow scripts.
+/rtl_gds/build/openroad/*.def
+/rtl_gds/build/openroad/*.gds

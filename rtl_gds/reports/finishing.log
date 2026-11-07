@@ -1,0 +1,80 @@
+OpenROAD bazel-nostamp 
+Features included (+) or not (-): -GPU +GUI -Python
+This program is licensed under the BSD-3 license. See the LICENSE file for details.
+Components of this program may be licensed under more restrictive licenses which must be honored.
+[INFO ORD-0030] Using 4 thread(s).
+[INFO DPL-0001] Placed 193734 filler instances.
+Filler usage:
+  sky130_fd_sc_hd__fill_1: 41309
+  sky130_fd_sc_hd__fill_2: 38900
+  sky130_fd_sc_hd__fill_4: 29095
+  sky130_fd_sc_hd__fill_8: 84430
+[WARNING FIN-0010] Skipping layer nwell.
+[WARNING FIN-0010] Skipping layer pwell.
+[WARNING FIN-0010] Skipping layer licon.
+[WARNING FIN-0010] Skipping layer li1.
+[WARNING FIN-0010] Skipping layer mcon.
+[INFO FIN-0003] Filling layer met1.
+[INFO FIN-0009] Filling 0 areas with non-OPC fill.
+[INFO FIN-0004] Total fills: 0.
+[WARNING FIN-0010] Skipping layer via.
+[INFO FIN-0003] Filling layer met2.
+[INFO FIN-0009] Filling 181 areas with non-OPC fill.
+[INFO FIN-0004] Total fills: 51003.
+[WARNING FIN-0010] Skipping layer via2.
+[INFO FIN-0003] Filling layer met3.
+[INFO FIN-0009] Filling 2187 areas with non-OPC fill.
+[INFO FIN-0004] Total fills: 115164.
+[WARNING FIN-0010] Skipping layer via3.
+[INFO FIN-0003] Filling layer met4.
+[INFO FIN-0009] Filling 297 areas with non-OPC fill.
+[INFO FIN-0004] Total fills: 174232.
+[WARNING FIN-0010] Skipping layer via4.
+[INFO FIN-0003] Filling layer met5.
+[INFO FIN-0009] Filling 169 areas with non-OPC fill.
+[INFO FIN-0004] Total fills: 201454.
+[INFO PSM-0040] All shapes on net VDD are connected.
+[INFO PSM-0040] All shapes on net VSS are connected.
+[INFO ANT-0002] Found 0 net violations.
+[INFO ANT-0001] Found 0 pin violations.
+[INFO RCX-0431] Defined process_corner nominal with ext_model_index 0
+[INFO RCX-0029] Defined extraction corner nominal
+[INFO RCX-0435] Reading extraction model file /Users/taha.ibrah/.ciel/sky130A/libs.tech/librelane/rules.openrcx.sky130A.nom.calibre ...
+[INFO RCX-0436] RC segment generation noc_mesh (max_merge_res 50.0) ...
+[INFO RCX-0040] Final 371778 rc segments
+[INFO RCX-0439] Coupling Cap extraction noc_mesh ...
+[INFO RCX-0440] Coupling threshhold is 0.1000 fF, coupling capacitance less than 0.1000 fF will be grounded.
+[INFO RCX-0442] 11% of 924690 wires extracted
+[INFO RCX-0442] 34% of 924690 wires extracted
+[INFO RCX-0442] 54% of 924690 wires extracted
+[INFO RCX-0442] 64% of 924690 wires extracted
+[INFO RCX-0442] 83% of 924690 wires extracted
+[INFO RCX-0442] 100% of 924690 wires extracted
+[INFO RCX-0045] Extract 65464 nets, 437242 rsegs, 437242 caps, 1137593 ccs
+[INFO RCX-0443] 65464 nets finished
+
+FINISHING — PHYSICAL AND TIMING CHECKS
+Filler cells added: 193734
+Metal fill shapes added: 201454
+Metal density verification: PENDING — check the exported GDS.
+Antenna-violating nets: 0
+All signal nets routed: 1
+Design area 970234 um^2 46% utilization.
+
+Setup / hold slack — TT 25 C / 1.8 V, routed-wire RC:
+Floating metal-fill coupling: not modeled in this OpenRCX flow.
+worst slack max 9.16
+worst slack min 0.10
+Slew violations: 0
+Capacitance violations: 0
+
+FINISHING — OUTPUTS
+Physical checkpoint: /Users/taha.ibrah/Downloads/noc-router-mesh/rtl_gds/build/openroad/noc_mesh_finished.odb
+Physical export: /Users/taha.ibrah/Downloads/noc-router-mesh/rtl_gds/build/openroad/noc_mesh_finished.def
+KLayout layer map (includes metal fill): /Users/taha.ibrah/Downloads/noc-router-mesh/rtl_gds/build/openroad/noc_mesh_finished_fill.map
+Supply-aware netlist: /Users/taha.ibrah/Downloads/noc-router-mesh/rtl_gds/build/openroad/noc_mesh_finished.v
+Constraints: /Users/taha.ibrah/Downloads/noc-router-mesh/rtl_gds/build/openroad/noc_mesh_finished.sdc
+Extracted parasitics: /Users/taha.ibrah/Downloads/noc-router-mesh/rtl_gds/build/openroad/noc_mesh_finished.spef
+Reports: /Users/taha.ibrah/Downloads/noc-router-mesh/rtl_gds/reports/finishing_*.rpt
+Finishing completed. Export GDS using /Users/taha.ibrah/Downloads/noc-router-mesh/rtl_gds/build/openroad/noc_mesh_finished_fill.map with fill import enabled.
+Next: verify GDS metal density and PDK DRC/LVS; validate fill effects on timing.
