@@ -196,19 +196,61 @@ _Why is Capacitance so important in ASIC?_ - Capacitance matters because every s
 
 **19: Finishing:** Adds the physical structure needed to complete the layout.
     - Filler cells: Occupy gaps between standard cells and maintain continuity of power rails and well structures along rows.
-    - Metal fill: Adds extra metal shapes in sparse areas to meet manufacturing density requirement.
+    - Metal fill: Adds extra metal shapes in sparse areas to improve manufacturing density. Density must be measured afterward to verify that the required coverage limits are met.
 
 **20: Parasitic Extraction:** Calculates the resistance and capacitance of the routed connections. Results are stored in .SPEF file, and OpenSTA combines information with final netlist, cell timing libraries, and SDC constraints to check timing again.
     - Demonstrates how actual wiring effects setup/hold slack, signal transition, and capacitive loads.
     - If violations remain, need further work.
 
-**21: Final Checks and Export:**
+**21: GDS Export and Final Verification:**
 
-| **Final STA** | Setup and hold timing pass using extracted wire resistance/capacitance at the required operating corners |
-| **Electrical checks** | Slew and capacitance stay within applicable limits |
-| **DRC** | Physical shapes obey manufacturing rules, such as wire spacing, width, and via placement |
-| **LVS** | The circuit extracted from the layout matches the intended final netlist |
-| **Connectivity and power checks** | Required signal and power connections are complete |
+Export the current layout to **GDSII before running GDS-based DRC, density verification, and LVS**. Exporting a GDS does not mean those checks have passed. In this project, KLayout combines the finished DEF, technology/cell LEFs, SKY130 cell GDS, and layer map to produce `build/openroad/noc_mesh_finished.gds`.
 
-- Failures can send you back to earlier stages.
-- Preserve the final netlist, SPEF, SDC, physical checkpoints, and verification reports. The flow then generates **GDSII** which can be inspected in KLayout.
+**DRC — Design Rule Checking**
+
+- **Purpose:** Check whether the physical shapes obey manufacturing rules: minimum width, spacing, area, contact/via enclosure, and manufacturing grid/angle requirements.
+- **Inputs:** The final GDS with actual standard-cell geometry and the matching PDK rule deck. A DEF/LEF abstract view alone does not contain every transistor-level shape needed for these checks.
+- **Project tools:** KLayout **0.30.12** and SKY130's `sky130A_mr.drc`. The completed run enabled FEOL (transistor/contact layers), BEOL (interconnect layers), and off-grid/angle checks. The optional floating-metal rule group was disabled.
+- **Outputs:** A `.lyrdb` marker report identifies the rule, cell, and geometry of each finding. The `.log` records execution details and the enabled options. Check the report's marker count after the run finishes; a successful process exit alone does not prove zero violations.
+- **Current result:** `noc_mesh_drc_03012.lyrdb` contains **0 markers** for the enabled checks. KLayout 0.30.10 produced false `li.5` findings on the same geometry; record the software version and rule settings with the result.
+- **If a check fails:** Inspect its marker in KLayout, identify the source, repair the relevant routing/fill/layout, export a fresh GDS, and rerun verification. For findings inside library cells, check the library and checker compatibility first.
+
+**Metal-Density Verification**
+
+- **Purpose:** Measure the fraction of a checking area covered by metal, including fill: **density = metal-covered area / checking area**. The coverage distribution matters for manufacturing processes such as planarization.
+- **Global checks** measure coverage over the whole design boundary. **Local checks** measure smaller windows stepped across the layout; a passing global average can hide a sparse or crowded local area.
+- **Minimum density** checks for insufficient metal coverage. **Maximum density** checks for excessive coverage. Apply the limits, window sizes, and exceptions from the selected process/runset; there is no single percentage suitable for every layer or process.
+- **Current project checker:** `met_min_ca_density.lydrc` checks whole-design maximum coverage only: **60% for li1 and met1–met4**, and **76% for met5**. Its `*_ca_density` log values are clear-area fractions, so metal coverage is `1 - ca_density`.
+- **Current result:** `noc_mesh_density_global.lyrdb` contains **0 markers**. This passes the installed check's global upper limits; **minimum-density and local-window verification remain pending**.
+- **Further coverage:** The installed SKY130 Magic `check_density.py` provides minimum/maximum checks using **700 × 700 µm windows stepped by 70 µm**, plus whole-design results. It also checks layers beyond the routing metals. A compatible Magic installation is needed to run that checker.
+- **If density fails:** Adjust the fill pattern, allowed sizes, spacing, or coverage area according to the failing rule. Regenerate the fill and GDS, then repeat density verification and DRC. Added metal can affect capacitance, so its timing effects also need verification.
+
+**LVS — Layout Versus Schematic**
+
+- **Purpose:** Extract the circuit represented by the layout and compare it with the intended final netlist. A layout can have legal spacing and widths while containing an incorrect electrical connection.
+- **Layout input:** The final GDS and the PDK's device-extraction and connectivity setup, which identify transistors, contacts, wires, and connected nets.
+- **Reference input:** Use the matching final physical-design netlist, such as `noc_mesh_finished.v`, together with the SKY130 cell circuit definitions and PDK comparison setup. This reference must account for buffers, resized cells, and antenna diodes added during physical design.
+- **Power and physical cells:** Account for VDD/VSS, well/body connections, and physical-only cells according to the chosen PDK LVS setup.
+- **Open-source tools:** A common flow uses **Magic** to extract a SPICE netlist and **Netgen** to compare the extracted and reference circuits. KLayout can also perform LVS with a suitable extraction/comparison runset.
+- **Typical mismatches:** An open connection splits one intended net into multiple nets; a short joins different nets. Incorrect ports, missing devices, or device-parameter differences can also prevent a match.
+- **Outputs and pass condition:** Preserve the extracted circuit netlist and comparison report/log. A pass requires an explicit circuit-match result with no unexplained connectivity, device, parameter, or port mismatches. **LVS has not yet been run for this project.**
+
+**Remaining Final Checks**
+
+- Verify setup/hold timing and slew/capacitance limits at the required operating corners. The current OpenRCX flow extracts routed-wire RC but does not model the added floating `dbFill` rectangles; its SPEF is not proof of fill-aware timing closure.
+- Confirm required signal/power connectivity and complete the planned power-integrity checks. LVS verifies circuit correspondence; timing analysis verifies speed requirements.
+- After repairs, regenerate the affected physical views and repeat the relevant checks. Preserve the matching GDS, netlist, SPEF, SDC, ODB/DEF checkpoints, tool versions, and reports.
+
+**Current Verification Status**
+
+Reports for these checks are kept under `rtl_gds/reports/drc_lvs/`. The numbered flow above describes the overall process; these numbers do not correspond one-to-one with the project's Tcl filenames.
+
+| Check | Current status | Main report |
+|---|---|---|
+| Enabled geometry DRC | **Passed — 0 markers**, KLayout 0.30.12 | `noc_mesh_drc_03012.lyrdb` and `.log` |
+| Global maximum density | **Passed — 0 markers** under the installed checker | `noc_mesh_density_global.lyrdb` and `.log` |
+| Minimum and local-window density | **Pending** | Not yet generated |
+| LVS | **Pending** | Not yet generated |
+| Fill-aware final timing | **Pending** | Not yet generated |
+
+References: [KLayout DRC](https://www.klayout.de/doc/manual/drc_basic.html), [SKY130 process rules](https://skywater-pdk.readthedocs.io/en/main/rules/periphery.html), [KLayout LVS](https://www.klayout.de/doc/manual/lvs_intro.html), [Netgen](https://github.com/RTimothyEdwards/netgen), [KLayout DRC regression](https://github.com/KLayout/klayout/issues/2423).
